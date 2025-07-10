@@ -1,0 +1,902 @@
+---
+id: mk-projects-keil
+title: Примеры проектов Keil
+sidebar_label: Примеры проектов Keil
+sidebar_position: 7
+---
+Примеры программ в Keil
+
+## Project #1 Example (SPI, GPIO)
+
+```c jsx showLineNumbers
+#include "regs_map_C_v6.h"
+#include "reg51.h"
+
+/*
+	This program shows work of seven-segment indicators and VD1-VD4 LEDs.
+	1. Controlling LEDs VD1-VD4.
+*/
+
+sbit gpioa_0 = 0x80;
+sbit gpioa_1 = 0x81;
+sbit gpioa_2 = 0x82;
+sbit gpioa_3 = 0x83;
+sbit gpioa_4 = 0x84;
+sbit gpioa_5 = 0x85;
+sbit gpioa_6 = 0x86;
+sbit gpioa_7 = 0x87;
+
+void Delay(int tick);
+
+void main (void)
+{
+	WriteReg(GPIOA_DIR_SET, 0xF0); //GPIOA_4-GPIOA_7 are output
+	while (1)
+	{ 
+		//Blinking VD1-VD4
+		gpioa_4 = 1;
+		Delay(10000);
+		gpioa_4 = 0;
+		gpioa_5 = 1;
+		Delay(10000);
+		gpioa_5 = 0;
+ 		gpioa_6 = 1;
+		Delay(10000);
+		gpioa_6 = 0;
+		gpioa_7 = 1;
+		Delay(10000);
+		gpioa_7 = 0;
+		Delay(10000);
+	}
+}
+
+void Delay(int tick){
+  //__asm("NOOP");
+  volatile int i=0;
+  while(i<tick){
+    i++;
+  }
+}
+```
+
+## Project #2 (ANALOG\_CFG)
+
+```c jsx showLineNumbers
+#include "regs_map_C_v6.h"
+#include "reg51.h"
+
+/*
+	This program shows how to configurate RC-generator.
+	1. ANALOG_O_RC - configure of capacitance, ANALOG_O_RC_R - configure of resistance.
+	2. ANALOG_O_RC = 0x00 and ANALOG_O_RC_R = 0x07 gives max frequency.
+	3. ANALOG_O_RC = 0x7F and ANALOG_O_RC_R = 0x00 gives min frequency.
+*/
+
+void main (void)
+{
+	WriteReg(ANALOG_O_RC, 0x0A); //Capacitance
+	WriteReg(ANALOG_O_RC_R, 0x03); //Resistance
+}
+
+```
+
+## Project #3 (ADC)
+
+```c jsx showLineNumbers
+#include "regs_map_C_v6.h"
+#include "reg51.h"
+
+/* 
+This program checks the operation of the first channel of the ADC multiplexer
+
+	1. First need apply 5 volts of reference voltage to Vrp_ADC.
+	2. Then you need to apply voltage to pin A1 from 0 to 5 B.
+	3. Load the program. Depending on the applied voltage, the LED on pins gpioa_7 or gpioa_6 will light up
+*/
+
+sbit gpioa_6 = 0x86;
+sbit gpioa_7 = 0x87;
+
+unsigned char val[2];
+unsigned int res;
+
+void Delay(int tick);
+
+
+void main (void)
+{
+	WriteReg(GPIOA_DIR_SET, 0xC0);  // GPIOA_6 and GPIOA_7 is output
+	WriteReg(ADC_CFG, 0x20);  // Right aligned bits
+	WriteReg(ADC_CTRL, 0x05);  // Enable ADC and pin A1
+	while (1) {
+		WriteReg(ADC_CTRL, 0x07); // Start adc
+		while ((ReadReg(ADC_ST)&0x04)!=0x04); // Wait until the new data is ready to be read
+		val[1] = ReadReg(ADC_RESH); // Read high register
+		val[0] = ReadReg(ADC_RESL); // Read low register
+		res = val[1];
+		res <<= 8;
+		res |= val[0];  // 16-bit result 
+		if ((res > 0x800) && (res <= 0xFFF)) { //if more than 2,5 B
+			gpioa_7 ^= 1; // gpioa_7 is 5 B
+		}
+		else {
+			gpioa_6 ^= 1; // gpioa_6 is 5 B
+		}
+		Delay(10000);
+	}
+}
+
+void Delay(int tick){
+  //__asm("NOOP");
+  volatile int i=0;
+  while(i<tick){
+    i++;
+  }
+}
+
+```
+
+## Project #4 (DAC)
+
+```c jsx showLineNumbers
+#include "regs_map_C_v6.h"
+#include "reg51.h"
+
+/*
+	This program show DAC in action.
+	1. First need apply 5 volts of reference voltage to Vrp_DAC.
+	2. Then need to write high and low bytes of digital value.
+	3. Finally check DAC_OUT pin, which is equal to analog value.
+*/
+
+
+void main (void)
+{
+	/*Vrp_DAC = 5 B*/
+	WriteReg(DAC_CTRL, 0x01); //DAC is enabled
+	WriteReg(DAC_CFG, 0x01); //Right alignment
+	WriteReg(DAC_VALUE0, 0xFF); //Write 8 less significant bits of DAC_VALUE
+	WriteReg(DAC_VALUE1, 0x0F); //Write 4 most significant bits of DAC_VALUE
+	/*DAC_OUT = 5 B */
+	while (1);
+}
+```
+
+## Project #5 (GPIO)
+
+```c jsx showLineNumbers
+#include "regs_map_C_v6.h"
+#include "reg51.h"
+
+/*
+	This program shows in action GPIO in input and output modes.
+	1. Microcontroller checks level of GPIOA_4.
+	2. If it's in high level, then inverts state of GPIOA_5.
+	3. Microcontroller checks level of GPIOA_7.
+	4. If it's in high level, then inverts state of GPIOA_6.
+	5. GPIOC_5 and GPIOC_7 are always in high level.
+*/
+
+void Delay(int tick);
+
+sbit gpioa_0 = 0x80;
+sbit gpioa_1 = 0x81;
+sbit gpioa_2 = 0x82;
+sbit gpioa_3 = 0x83;
+sbit gpioa_4 = 0x84;
+sbit gpioa_5 = 0x85;
+sbit gpioa_6 = 0x86;
+sbit gpioa_7 = 0x87;
+
+sbit gpiob_0 = 0xA0;
+sbit gpiob_1 = 0xA1;
+sbit gpiob_2 = 0xA2;
+sbit gpiob_3 = 0xA3;
+sbit gpiob_4 = 0xA4;
+sbit gpiob_5 = 0xA5;
+sbit gpiob_6 = 0xA6;
+sbit gpiob_7 = 0xA7;
+
+sbit gpioc_0 = 0xB0;
+sbit gpioc_1 = 0xB1;
+sbit gpioc_2 = 0xB2;
+sbit gpioc_3 = 0xB3;
+sbit gpioc_4 = 0xB4;
+sbit gpioc_5 = 0xB5;
+sbit gpioc_6 = 0xB6;
+sbit gpioc_7 = 0xB7;
+
+
+void main (void)
+{
+ 	WriteReg(GPIOA_DIR_SET, 0x6F); //GPIOA_0 - GPIOA_3, GPIOA_5 and GPIOA_6 are output
+	WriteReg(GPIOA_DIR_CLR, 0x90); //GPIOA_7 and GPIOA_4 are input
+	WriteReg(GPIOC_DIR_SET, 0xF0); //GPIOC_4-GPIOC_7 are output
+	while (1)
+	{
+		if ((P0&0x10) == 0x10) //Check if CPIOA_4 in high level
+		{
+			gpioa_5 ^= 1; //Then invert GPIOA_5
+			Delay(5000);
+		}
+		if ((P0&0x80) == 0x80) //Check if GPIOA_7 in high level
+		{
+			gpioa_6 ^= 1; //Invert GPIOA_6
+			Delay(5000);
+		}
+		P3 = 0xA0; //GPIOC_7 and GPIOC_5 are always in high level
+	}
+}
+
+void Delay(int tick){
+  //__asm("NOOP");
+  volatile int i=0;
+  while(i<tick){
+    i++;
+  }
+}
+```
+
+## Project #6 (I2C)
+
+```jsx showLineNumbers
+#include "regs_map_C_v6.h"
+#include "reg51.h"
+
+/*
+	This program shows I2C interface in action in slave and master modes.
+	1. In slave mode microcontroller waits byte for receiving.
+	2. Addres of receiver is "0x0F".
+	3. If it receives byte, then checks.
+	4. If byte is equal to "0x80" then inverts state of GPIOA_5;
+	5. In master mode microcontroller sends 4 bytes to slave;
+	6. GPIOC_6 and GPIOC_7 are used for SCL and SDA accordingly.
+*/
+
+sbit gpioa_5 = 0x85;
+sbit gpioa_4 = 0x84;
+unsigned char opros; //Value for received byte
+
+///*slave mode*///
+
+
+void main(void)
+{
+	gpioa_5 = 0;
+	WriteReg(GPIOC_ALTF1, 0x50); //GPIOC_6 - SCL, GPIOC_7 - SDA
+	WriteReg(GPIOA_DIR_SET, 0x20); //GPIOA_5 is output
+	WriteReg(I2C_CFG, 0x00); //Receiving buffer is disabled for overwriting
+	WriteReg(I2C_ADDR0, 0x0F); //Address of receiver
+	WriteReg(I2C_CTRL, 0x09); //I2C module is enabled, acknowledgment of receiving byte
+	while (1)
+	{
+		while((ReadReg(I2C_ST1)&0x01)!=0x01); //Waiting while receive buffer is empty
+		opros = ReadReg(I2C_RXFIFO); //Saving byte from receive buffer
+		WriteReg(I2C_CTRL, 0x09); //
+		if (opros == 0x80) //Check saved byte
+		{
+			gpioa_5 ^= 1; //If it's equal to '0x80' then invert GPIOA_5
+		}
+	}
+}
+
+
+/* master mode*/
+/*
+
+void Delay(int tick);
+	
+void main (void)
+{
+	WriteReg(GPIOC_ALTF1, 0x50); //GPIOC_6 - SCL, GPIOC_7 - SDA
+	WriteReg(GPIOA_DIR_SET, 0x20); //GPIOA_5 is output
+	WriteReg(I2C_CFG, 0x01); //Receiving buffer is enabled for overwriting
+	WriteReg(I2C_PRSC0, 0x1A); //Less significant byte of prescalers
+	WriteReg(I2C_RXTHRESHOLD, 0x7); //The number of unread bytes in receiver buffer, which forms the according sign in status register
+	while (1)
+	{
+		gpioa_5 = 1; //High level
+		WriteReg(I2C_TXFIFO, 0x0E); //Addres of slave is equal to "0x07"
+		WriteReg(I2C_CTRL, 0x03); //I2C module and forming START sequence are enabled
+		WriteReg(I2C_TXFIFO, 0x09); //Transmitting 0x09
+		WriteReg(I2C_TXFIFO, 0x02); //Transmitting0x02
+		WriteReg(I2C_TXFIFO, 0x05); //Transmitting 0x05
+		WriteReg(I2C_TXFIFO, 0x0F); //Transmitting 0x0F	
+		while((ReadReg(I2C_ST1)&0x04)!=0x04); //Waiting transmitting from TX buffer
+		WriteReg(I2C_CTRL, 0x05); //I2C module and forming STOP sequence are enabled
+		gpioa_5 = 0; //Low level
+		Delay(10000);
+	}
+}
+
+void Delay(int tick){
+  //__asm("NOOP");
+  volatile int i=0;
+  while(i<tick){
+    i++;
+  }
+} 
+*/
+
+
+
+```
+
+## Project #7 (1-Wire)
+
+```c jsx showLineNumbers
+#include "regs_map_C_v6.h"
+#include "reg51.h"
+#include "stdio.h"
+#include "stdlib.h"
+#include "string.h"
+
+/*
+	This program shows 1-Wire interface in action
+	1. Microcontroller reads ID of slave device and compares it with ID_CONST.
+	2. The testing function returns status.
+	3. OK - ID was read successfully and it is right.
+	4. Error-reset - device didn't give response impulse.
+	5. Error-read - read ID doesn't match with ID_CONST
+*/
+
+typedef enum {
+	OK,
+	Error_reset,
+	Error_read
+} Status_t;
+
+#define bool char
+#define true 1 
+#define false 0
+
+//Read ROM_ID of slave device
+void READ_ROM(char* ID);
+
+//Send impulse Reset with 1-Wire
+char OW_Reset();
+
+//Read 1 byte with 1-Wire
+unsigned char OW_ReadByte(void);
+
+//Send 1 byte with 1-Wire
+void OW_WriteByte(char DATA);
+
+//Testing function
+Status_t OWI_TEST(char* ID);
+
+//Int to c_string
+char* itoa(int num, char* str, int base);
+
+//Send string with UART
+void put_string(const char * s);
+
+unsigned char ID[8] = 0;
+
+const unsigned char ID_CONST[8] = {0x28, 0x17, 0xC8, 0xd0, 0x05, 0x00, 0x00, 0xE8}; 
+
+void Delay(int tick);
+
+void main (void)
+{
+	int i, j;
+	char buf[20];
+	WriteReg(OWI_PRCR, 0x88);  //Settings of 1-Wire prescaler 
+	OWI_TEST(ID);
+	for(i = 0; i < 8; i++) 
+	{
+		j = (int)ID[i];
+		itoa(j, buf, 16);
+		put_string(buf);
+	}
+	for(i = 0; i < 8; i++) 
+	{
+		j = (int)ID_CONST[i];
+		itoa(j, buf, 16);
+		put_string(buf);
+	}
+}
+
+
+void Delay(int tick){
+  volatile int i=0;
+  while(i<tick){
+    i++;
+  }
+}
+
+void put_char(unsigned char c){
+	volatile int i=0;
+	Delay(15);
+	WriteReg(UART0_TX,c); //Sending byte to UART_TX buffer
+	while(ReadReg(UART0_ST1)&0x2!=0x2); //Waiting for UART transmitting 
+}
+
+void put_string(const char * s){
+	while(*s!=0){
+		put_char(*s);
+		s++;
+	}
+}
+
+void reverse(char * str, int length) 
+{ 
+	int start = 0; 
+	int end = length -1;
+	char c; 
+	while (start < end) 
+	{ 
+		c = *(str+end);
+		*(str+end) = *(str+start);
+		*(str+start) = c;
+		start++; 
+		end--; 
+	} 
+} 
+
+char* itoa(int num, char* str, int base) 
+{ 
+	int i = 0; 
+	bool isNegative = false; 
+
+	//Separate case for zero
+	if (num == 0) 
+	{ 
+		str[i++] = '0'; 
+		str[i] = '\0'; 
+		return str; 
+	} 
+
+	//The number is represented in negative form only in decimal format
+	if (num < 0 && base == 10) 
+	{ 
+		isNegative = true; 
+		num = -num; 
+	} 
+
+	//Representing the digits of a number in a given base
+	while (num != 0) 
+	{ 
+		int rem = num % base; 
+		str[i++] = (rem > 9)? (rem-10) + 'a' : rem + '0'; 
+		num = num/base; 
+	} 
+
+	//For a negative number add a minus sign
+	if (isNegative) 
+		str[i++] = '-'; 
+
+	str[i] = '\0'; //Adding an empty character to the end of a string
+
+	//Reverse string
+	reverse(str, i); 
+
+	return str; 
+}	
+
+Status_t OWI_TEST(char* ID) {
+	if(OW_Reset()) return Error_reset;
+	
+	READ_ROM(ID);
+	
+	if (strcmp(ID, ID_CONST))
+		return Error_read;
+	return OK;
+}
+
+void READ_ROM(char* ID) {
+	int i;
+	
+	OW_WriteByte(0x33); //Reading ROM_ID
+	ReadReg(OWI_BUF); //Clear buffer
+	ReadReg(OWI_BUF); //Clear buffer
+
+	//Read 8 bytes in series
+	for (i = 0; i < 8; i++) {
+		ID[i] = OW_ReadByte();
+	}
+}
+
+char OW_Reset() {
+	WriteReg(OWI_CFG, OWI_CFG_1WR); //Init transmit reset signal
+	while( !(ReadReg(OWI_ST) & OWI_ST_PD) ); //Wainting for transmitting
+	if ( ReadReg(OWI_ST) & OWI_ST_PDR ) return 1; //Checking fixation flag of response impulse
+	return 0;
+}
+
+unsigned char OW_ReadByte(void) {
+	unsigned char res;
+	
+	WriteReg(OWI_BUF, 0xFF); //Transmit "0xFF" for reading byte
+	while( !(ReadReg(OWI_ST) & OWI_ST_RBF) ); //Waiting for filling receive buffer
+	res = ReadReg(OWI_BUF); //Duplex buffer
+	
+	return res;
+}
+
+void OW_WriteByte(char DATA) {
+	while( !(ReadReg(OWI_ST) & OWI_ST_TBE) ); //Waiting for filling transmit buffer
+	WriteReg(OWI_BUF, DATA); 
+	while( !(ReadReg(OWI_ST) & OWI_ST_TEMT) ); //Waiting for transmitting
+}
+```
+
+## Project #8 (SLEEP mode)
+
+```c jsx showLineNumbers
+#include "regs_map_C_v6.h"
+#include "reg51.h"
+
+/*
+	This program shows switching clocking and low power mode
+	1. Microcontroller switches to clocking from RC-chain.
+	2. Microcontroller enters low power mode.
+	3. Microcontroller switches to clocking from xtal.
+*/
+
+sbit gpioa_6 = 0x86;
+
+void main (void)
+{
+	WriteReg(FSM_PRD2, 0x01); //value for FSM_H
+	WriteReg(FSM_PRD1, 0x01); //value for FSM_M
+	WriteReg(FSM_PRD0, 0xFF); //value for FSM_L
+	WriteReg(GPIOA_DIR_SET, 0x40); //GPIOA_6 is output
+	while (1)
+	{
+		WriteReg(CMM_CTRL, 0x06); 
+		WriteReg(CMM_CTRL, 0x07); //clocking from RC
+		while((ReadReg(CMM_ST)&0x2)==0x2); //Waiting for switching to frequency
+		WriteReg(CMM_CTRL, 0x05); //clocking from RC
+		gpioa_6 = 1; //High level
+		WriteReg(FSM_CTRL, 0x01); //Enable switch frequency module
+		gpioa_6 = 0; //Low level
+		WriteReg(CMM_CTRL, 0x07); 
+		WriteReg(CMM_CTRL, 0x06); //clocking from xtal
+		while((ReadReg(CMM_ST)&0x2)==0x2); //Waiting for switching to frequency
+		WriteReg(CMM_CTRL, 0x02); //clocking from xtal
+	}
+}
+```
+
+## Project #9 (SPI)
+
+```c jsx showLineNumbers
+#include "regs_map_C_v6.h"
+#include "reg51.h"
+
+/*
+	This program shows SPI interface in action
+	1. In master mode microcontroller sends 2 bytes in mode 0.
+	2. In slave mode microcontroller recives bytes and checks its values.
+	3. After checking values it can invert GPIOA_4, GPIOA_6 or GPIOA_7 state accordingly.
+	4. When it receives byte interrupt is inverting GPIOA_5 state.
+*/
+
+unsigned char val;
+sbit gpioa_7 = 0x87;
+sbit gpioa_6 = 0x86;
+sbit gpioa_3 = 0x83;
+sbit gpioa_5 = 0x85;
+sbit gpioa_4 = 0x84;
+
+/* MASTER */
+
+void Delay(int tick);
+
+void main (void)
+{
+	WriteReg(GPIOA_DIR_SET, 0x08); //GPIOA_3 is output (CS)
+	gpioa_3 = 1; //High level of CS
+	WriteReg(GPIOA_ALTF0, 0x15); //GPIOA_0 - MOSI, GPIOA_1 - MISO, GPIOA_2 - SCK
+	WriteReg(SPI0_CFG2, 0x08); //Frequency is 250kHz
+	WriteReg(SPI0_CFG0, 0x11); //Set master mode, data format is 16 bit, mode 0, bit order is MSB
+	while (1)
+	{
+		WriteReg(SPI0_TX1, 0x52); //First byte to transmit buffer
+		WriteReg(SPI0_TX0, 0xA9); //Second byte to transmit buffer
+		gpioa_3 = 0; //Lov level of CS
+		WriteReg(SPI0_CTRL, 0x01); //SPI is enabled
+		while ((ReadReg(SPI0_ST)&0x20)==0x20); //Waiting for transmitting bytes from TX buffer
+		//while ((ReadReg(SPI0_ST)&0x40)!=0x40); - alternative register is NULL_BUF 
+		 
+		gpioa_3 = 1; //High level of CS
+		WriteReg(SPI0_CTRL, 0x00); //SPI is disabled
+		Delay(30000);
+	}
+}
+
+void Delay(int tick){
+  //__asm("NOOP");
+  volatile int i=0;
+  while(i<tick){
+    i++;
+  }
+}
+
+
+/*SLAVE*/
+/*
+void main (void)
+{
+	IE = 0x84; //Interrupt for SPI is enabled
+	WriteReg(GPIOA_ALTF0, 0x55); //GPIOA_0 - MOSI, GPIOA_1 - MISO, GPIOA_2 - SCK, GPIOA_3 - CS
+	WriteReg(GPIOA_DIR_SET, 0xF0); //GPIOA_7, GPIOA_6, GPIOA_5 are output
+	WriteReg(SPI0_CFG0, 0x06); //Set slave mode, data format is 8 bit, mode 0
+	WriteReg(SPI0_CFG1, 0x01); //Only receiving is enabled
+	WriteReg(SPI0_CFG2, 0x08); //Frequency is 250kHz
+	WriteReg(SPI0_MSK, 0x08); //Enable interrupt when receiving buffer is not empty
+	WriteReg(SPI0_CTRL, 0x01); //SPI is enabled
+	while (1)
+	{
+		if (val == 0xA9) //check if received 0xA9
+		{
+			gpioa_7 ^= 1; //Invert GPIOA_7 state
+			val = 0x00;
+		}
+		if (val == 0x51)
+		{
+			gpioa_6 ^= 1;
+			val=0x00;
+		}
+		if(val == 0xAA)
+		{
+			gpioa_4 ^= 1;
+			val = 0x00;
+		}
+	}
+}
+
+void int1_handler (void) interrupt 2 //Interrupt on receinving data
+{
+	gpioa_5 ^= 1; //Invert GPIOA_5 state
+	val = ReadReg(SPI0_RX0); //Save received byte to value
+	WriteReg(INT_FIX_CLR1, 0x08); //Reset of interrupt
+}
+*/
+```
+
+## Project #9 (Timer)
+
+```c jsx showLineNumbers
+#include "regs_map_C_v6.h"
+#include "reg51.h"
+
+/*
+	This program shows different timerts in action.
+	1. Simple timer.
+	2. Timer with external stop event.
+	3. Timer-counter.
+	4. Timer-counter with external event.
+	5. Inter-event timer.
+*/
+
+sbit gpioa_7 = 0x87;
+sbit gpioa_6 = 0x86;
+sbit gpioa_5 = 0x85;
+
+///Simple timer0///
+
+void main (void)
+{
+	IE = 0x84; //Enable interrupts from timer0
+	WriteReg(GPIOA_DIR_SET, 0xC0); //GPIOA_7 and GPIOA_6 are output
+	WriteReg(TMR0_PRDH, 0x0A); //Set high period of timer0
+	WriteReg(TMR0_PRDM, 0xFF); //Set medium period of timer0
+	WriteReg(TMR0_PRDL, 0xFF); //Set low period of timer0
+	WriteReg(TMR0_MSK, 0x01); //Enable interrupt at the end of counting
+	WriteReg(TMR0_CTRL, 0x21); //Enable timer0 and start from 0 at the end of counting
+	gpioa_6 = 1;
+	while (1);
+}
+
+void int1_handler (void) interrupt 2
+{
+	gpioa_7 = ~gpioa_7; //Invert GPIOA_7 state
+	WriteReg(INT_FIX_CLR1, 0x02); //Reset interrupt
+}
+
+
+///Simple timer1///
+/*
+void main (void)
+{
+	IE = 0x90;
+	WriteReg(GPIOA_DIR_SET, 0xC0);
+	WriteReg(TMR1_PRDH, 0x0A);
+	WriteReg(TMR1_PRDM, 0xFF);
+	WriteReg(TMR1_PRDL, 0xFF);
+	WriteReg(TMR1_MSK, 0x01);
+	WriteReg(TMR1_CTRL, 0x21);
+	gpioa_6 = 1;
+	while (1);
+}
+
+void int1_handler (void) interrupt 4
+{
+	gpioa_7 = ~gpioa_7; 
+	WriteReg(INT_FIX_CLR2, 0x02);
+}
+*/
+
+///Simple timer2///
+/*
+void main (void)
+{
+	IE = 0xA0;
+	WriteReg(GPIOA_DIR_SET, 0xC0);
+	WriteReg(TMR2_PRDH, 0x0A);
+	WriteReg(TMR2_PRDM, 0xFF);
+	WriteReg(TMR2_PRDL, 0xFF);
+	WriteReg(TMR2_MSK, 0x01);
+	WriteReg(TMR2_CTRL, 0x21);
+	gpioa_6 = 1;
+	while (1);
+}
+
+void int1_handler (void) interrupt 5
+{
+	gpioa_7 = ~gpioa_7;
+	WriteReg(INT_FIX_CLR3, 0x02);
+}
+*/
+
+///Timer with external stop///
+
+/*void main (void)
+{
+	IE = 0x90; //Enable interrupts from timer1
+	WriteReg(GPIOA_DIR_SET, 0xC0); //GPIOA_7 and GPIOA_6 are output
+	WriteReg(GPIOA_ALTF0, 0x0C); //The stop event occurs on a falling edge of GPIOA_1
+	WriteReg(TMR1_CFG, 0x02); //The stop event on a falling edge
+	WriteReg(TMR1_MSK, 0x08); //Enable interrupt of stopping timer by external event
+	WriteReg(TMR1_CTRL, 0x05); //Enable timer with external stop event
+	gpioa_6 = 1;
+	while (1);
+}
+
+void int1_handler (void) interrupt 4
+{
+	gpioa_7 = 1;  	
+	WriteReg(INT_FIX_CLR2, 0x02); //Reset interrupt
+}*/
+
+
+///Timer-counter///
+/*
+void main (void)
+{
+	WriteReg(GPIOA_DIR_SET, 0xC0); //GPIOA_7 and GPIOA_6 are output
+	WriteReg(TMR0_CTRL, 0x0F); //Timer0-counter is enabled
+	WriteReg(TMR1_PRDH, 0x11); //High period of timer1
+	WriteReg(TMR1_PRDM, 0x01); //Medium period of timer1
+	WriteReg(TMR1_PRDL, 0x01); //Low period of timer1
+	WriteReg(TMR1_CTRL, 0x1F); //Start timer-counter
+	while (1)
+	{	
+		gpioa_7 ^= 1; //Invert GPIOA_7 state
+		//It counts till value from TMR1_PRDH, TMR1_PRDM, TMR1_PRDL
+		//And when it reaches this values then occurs Timer0 STOP_EVENT
+		if ((ReadReg(TMR0_ST)&0x08)==0x08) //If Timer0 STOP_EVENT occured
+		{
+			gpioa_6 = 1; //GPIOA_6 to high level
+		}
+	}
+}
+*/
+
+///Timer-counter with external event///
+/*
+void main (void)
+{
+	IE = 0x84; //Enable interrupts from timer0
+	WriteReg(GPIOA_DIR_SET, 0xE0); //GPIOA_7 and GPIOA_6 are output
+	WriteReg(GPIOC_ALTF0, 0x03); //GPIOC_0 for TIMER_1
+	WriteReg(TMR0_MSK, 0x08); //Enable interrupt by STOP_EVENT
+	WriteReg(TMR0_CTRL, 0x0F); //Timer-counter is enabled
+	WriteReg(TMR1_PRDH, 0x00); //High period of timer1
+	WriteReg(TMR1_PRDM, 0x00); //Medium period of timer1
+	WriteReg(TMR1_PRDL, 0x02); //Low period of timer1
+	WriteReg(TMR1_CFG, 0x0A); //The stop event occurs on a falling edge of GPIOC_0
+	WriteReg(TMR1_CTRL, 0x1F); //Start counting
+	
+	while (1)
+	{
+		gpioa_7 ^= 1;
+	}
+}
+
+void int1_handler (void) interrupt 2
+{
+	gpioa_5 = 1; //Set high level
+	WriteReg(INT_FIX_CLR1, 0x02); //Reset interrupt
+}
+*/
+
+///Inter-event timer///
+/*
+void main(void)
+{
+	IE = 0x84; //Enable interrupts from timer0
+	WriteReg(GPIOA_DIR_SET, 0xC0); //GPIOA_7 and GPIOA_6 are output
+	gpioa_6 = 1; //Set high level
+	WriteReg(GPIOA_ALTF0, 0x03); //GPIOA_0 for START and STOP events
+	WriteReg(TMR0_CFG, 0x02); //The stop event occurs on a falling edge, the start event occurs on a rising edge
+	WriteReg(TMR0_MSK, 0x08); //Enable interrupt by STOP_EVENT
+	WriteReg(TMR0_CTRL, 0x09); //Inter-event timer is enabled
+	
+	gpioa_7 = 1;
+	while(1)
+	{
+		gpioa_7 ^=1;
+	}
+}
+
+void int1_handler (void) interrupt 2
+{
+	gpioa_6 = 0; //Set low level
+	WriteReg(INT_FIX_CLR1, 0x02); //Reset interrupt
+}
+*/
+```
+
+## Project #10 (UART)
+
+```c jsx showLineNumbers
+#include "regs_map_C_v6.h"
+#include "reg51.h"
+
+/*
+	This program shows UART interface in action. (GPIOA_4 is used for TX_PIN, GPIOA_5 is used for RX_PIN)
+	1. Pin GPIOA_7 is being used for choosing mode between transmit and receive.
+	2. In transmitting mode microcontroller sending three bytes in series from array "c".
+	3. After pg. 2 it sends byte "\n", so final string looks like "qwe\n".
+	4. In receiving mode microcontroller waits, while RX buffer would be not empty.
+	5. When microcontroller receives one byte, it saves it to array "val".
+*/
+
+sbit gpioa_7 = 0x87;
+sbit gpioa_3 = 0x83;
+unsigned char val[2]; //array for receiving
+char* c[3] = {'q','w','e'}; //array for transmitting
+int i;
+
+void Delay(int tick);
+	
+void main(void)
+{
+	WriteReg(GPIOA_DIR_SET, 0x80); //GPIOA_7 is output
+	WriteReg(GPIOA_ALTF1, 0x05); //GPIOA_4 - tx, GPIOA_5 - rx
+	WriteReg(UART0_BDR0, 0x1A); //Less significant byte of baudrate 
+	WriteReg(UART0_BDR1, 0x00); //Most significant byte of baudrate (final baudrate is 9600)
+	while (1)
+	{
+		if(gpioa_7) //If it's in high level - transmitting mode
+		{
+			WriteReg(UART0_CTRL, 0x10); //Transmitter is enabled, receiver is disabled
+			for(i=0;i<3;i++)
+			{
+				WriteReg(UART0_TX, c[i]); //Writing one byte from array "c" to transmit buffer
+				while((ReadReg(UART0_ST1)&0x2)!=0x2); //Waiting for transmitter idle
+				Delay(30000);
+			}
+			WriteReg(UART0_TX, '\n');
+			while((ReadReg(UART0_ST1)&0x2)!=0x2);
+		}
+		else //If it's in low level - receiving mode
+		{
+			WriteReg(UART0_CTRL, 0x20); //Receiver is enabled, transmitter is disabled
+			while ((ReadReg(UART0_ST1)&0x01)!=0x01); //Waiting reception of byte to RX buffer
+			val[0] = ReadReg(UART0_RX0); //Writing this byte to array "val"
+		}
+	}
+}
+
+void Delay(int tick){
+  //__asm("NOOP");
+  volatile int i=0;
+  while(i<tick){
+    i++;
+  }
+}
+```
