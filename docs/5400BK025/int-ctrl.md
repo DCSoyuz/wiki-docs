@@ -12,7 +12,7 @@ sidebar_position: 14
 <table className="table">
 <tbody>
 
-  <tr>
+  <tr >
     <th >№</th>
     <th >Аббревиатура</th>
     <th >Доступ</th>
