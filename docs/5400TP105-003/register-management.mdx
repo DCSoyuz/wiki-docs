@@ -13,12 +13,11 @@ sidebar_position: 5
 
 ## Обращение к внешним регистрам
 
-<div className="doc-image-container">
-<figure>
-  <img src="/img/5400TP105-003/register-management/Блок_упр_вн_регистрами.svg" alt="" />
-  <figcaption  className="doc-image-container__image-title">Принцип работы блока управления внешними регистрами</figcaption>
-</figure>
-</div>
+<DocumentFigure
+  src="/img/5400TP105-003/register-management/Блок_упр_вн_регистрами.svg"
+  alt="Принцип работы блока управления внешними регистрами"
+  caption="Принцип работы блока управления внешними регистрами"
+/>
 
 Когда ядро 8051 декодирует одну из команд обращения к внешним регистрам, оно передает эту команду (и, в случае записи, данные для записи) в блок управления внешними регистрами (EXT\_ REG_CONTROL). Блок, в свою очередь, выдает сигнал FORCE для GPIOB и GPIOC. Поэтому сигналу на выводы GPIOC начинают выдаваться сигналы SEL, EN и WR/RD для внешних регистров, а на выводы GPIOB выдаются данные для записи в регистр (при записи), либо же эти выводы принимают данные из внешнего регистра (при чтении). Включение/выключение выходного буфера GPIO происходит автоматически, вне зависимости от текущего значения регистра GPIO_DIR. Вывод GPIO должен быть настроен как вывод общего назначения (соединен с портом P процессора) в регистрах GPIO_ALTF0 и GPIO_ALTF1.
 
@@ -29,19 +28,12 @@ sidebar_position: 5
 | EN              | GPIOC&lt;1&gt;        | Выход                             | Сигнал разрешения доступак внешнему регистру    |
 | WR/RD           | GPIOC&lt;0&gt;        | Выход                             | Сигнал записи/чтения: «1» – запись,«0» – чтение |
 
-<div className="doc-image-container">
-<figure>
-  <img src="/img/5400TP105-003/register-management/Запись_во_вн_регистр.svg" alt="" />
-  <figcaption  className="doc-image-container__image-title">Временная диаграмма записи во внешний регистр</figcaption>
-</figure>
-</div>
+<DocumentFigure src="/img/5400TP105-003/register-management/Запись_во_вн_регистр.svg" caption="Временная диаграмма записи во внешний регистр" />
 
-<div className="doc-image-container">
-<figure>
-  <img src="/img/5400TP105-003/register-management/Чтение_из_вн_регистра.svg" alt="" />
-  <figcaption  className="doc-image-container__image-title">Временная диаграмма чтения из внешнего регистра</figcaption>
-</figure>
-</div>
+<DocumentFigure
+  src="/img/5400TP105-003/register-management/Чтение_из_вн_регистра.svg"
+  caption="Временная диаграмма чтения из внешнего регистра"
+/>
 
 До начала диаграммы GPIOB и GPIOC были настроены на вход, поэтому все сигналы (DATA, SEL, EN, WR/RD) находятся в состоянии высокого импеданса.
 

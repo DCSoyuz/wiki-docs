@@ -18,12 +18,11 @@ sidebar_position: 8
 
 ## Структурная схема
 
-<div className="doc-image-container">
-<figure>
-  <img src="/img/5400TP105-003/cmm/Управление_иточниками_тактовых_сигналов.svg" alt="" />
-  <figcaption  className="doc-image-container__image-title">Структурная схема модуля управления источниками тактовых сигналов системы</figcaption>
-</figure>
-</div>
+<DocumentFigure
+  src="/img/5400TP105-003/cmm/Управление_иточниками_тактовых_сигналов.svg"
+  alt="Структурная схема модуля управления источниками тактовых сигналов системы"
+  caption="Структурная схема модуля управления источниками тактовых сигналов системы"
+/>
 
 Модуль управления источниками тактовых сигналов системы состоит из следующих блоков:
 
@@ -69,12 +68,12 @@ sidebar_position: 8
     <th >0</th>
   </tr>
 
-  <tr>
-    <th >Назначение</th>
-    <td  colSpan={5} >Резерв*</td>
-    <td  colSpan={2} >Резерв*</td>
-    <td >RC_XTAL</td>
-  </tr>
+<tr>
+  <th>Назначение</th>
+  <td colSpan={5}>Резерв*</td>
+  <td colSpan={2}>Резерв*</td>
+  <td>RC_XTAL</td>
+</tr>
 
   <tr>
     <th >Начальное значение</th>
@@ -109,10 +108,10 @@ sidebar_position: 8
     <th >0</th>
   </tr>
 
-  <tr>
-    <th >Назначение</th>
-    <td colSpan={8} >COEF</td>
-  </tr>
+<tr>
+  <th>Назначение</th>
+  <td colSpan={8}>COEF</td>
+</tr>
 
   <tr>
     <th >Начальное значение</th>
@@ -131,11 +130,7 @@ $$
 
 где F<sub>SRC</sub> – исходная частота от источника XTAL_CLK или RC_CLK.
 
-При COEF=0:
-
-$$
-F_{CLK} = F_{SRC}
-$$
+При COEF=0: $F_{CLK} = F_{SRC}$
 
 ### CMM_MSK
 
@@ -154,11 +149,11 @@ $$
     <th >0</th>
   </tr>
 
-  <tr>
-    <th >Назначение</th>
-    <td colSpan={7}  >Резерв</td>
-    <td >NSWITCH</td>
-  </tr>
+<tr>
+  <th>Назначение</th>
+  <td colSpan={7}>Резерв</td>
+  <td>NSWITCH</td>
+</tr>
 
   <tr>
     <th >Начальное значение</th>
@@ -189,17 +184,19 @@ $$
     <th >0</th>
   </tr>
 
-  <tr>
-    <th >Назначение</th>
-    <td rowSpan={2} colSpan={6} >Резерв</td>
-    <td >SWITCH</td>
-    <td >NSWITCH</td>
-  </tr>
-    <tr>
-    <th >Тип статуса</th>
-    <td >FLAG</td>
-    <td >EVENT</td>
-  </tr>
+<tr>
+  <th>Назначение</th>
+  <td rowSpan={2} colSpan={6}>
+    Резерв
+  </td>
+  <td>SWITCH</td>
+  <td>NSWITCH</td>
+</tr>
+<tr>
+  <th>Тип статуса</th>
+  <td>FLAG</td>
+  <td>EVENT</td>
+</tr>
 
   <tr>
     <th >Начальное значение</th>

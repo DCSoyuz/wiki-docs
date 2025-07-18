@@ -10,12 +10,12 @@ sidebar_position: 12
 ## Структурная схема
 
 <div className="doc-image-container">
-<figure>
-  <img src="/img/5400TP105-003/timer/Структурная_схема_TIMER.svg" alt="" />
-  <figcaption  className="doc-image-container__image-title">Структурная схема двух соединенных модулей таймера</figcaption>
-</figure>
+  <figure>
+    <img src="" alt="" />
+    <figcaption className="doc-image-container__image-title"></figcaption>
+  </figure>
 </div>
-
+<DocumentFigure src="/img/5400TP105-003/timer/Структурная_схема_TIMER.svg" caption="Структурная схема двух соединенных модулей таймера" />
 Таймер состоит из следующих блоков:
 
 - REGISTERS – блок для хранения управляющих данных и статусов;
@@ -156,265 +156,77 @@ sidebar_position: 12
 
 ## Регистры таймеров
 
-<table className="table">
-<tbody>
+#### TIMER0
 
-  <tr>
-    <th >№</th>
-    <th >Аббревиатура</th>
-    <th >Доступ</th>
-    <th >Описание</th>
-  </tr>
- <tr>
-     <td  colSpan={4} ><b>TIMER0</b></td>
- </tr>
-  <tr>
-    <td  >2D00h </td>
-    <td  >TMR0_CTRL</td>
-    <td  >RW</td>
-    <td  >Регистр управления</td>
-  </tr>
-  
-   <tr>
-    <td  >2D01h </td>
-    <td  >TMR0_CFG</td>
-    <td  >RW</td>
-    <td  >Регистр конфигурации</td>
-  </tr>
-  
-  <tr>
-    <td  >2D02h </td>
-    <td  >TMR0_PRDH</td>
-    <td  >RW</td>
-    <td  >Период счета таймера, старшая часть</td>
-  </tr>
-    
-   <tr>
-    <td  >2D03h </td>
-    <td  >TMR0_PRDM</td>
-    <td  >RW</td>
-    <td  >Период счета таймера, старшая часть</td>
-  </tr>
+| Адрес | Аббревиатура | Доступ | Описание                                |
+| ----- | ------------ | ------ | --------------------------------------- |
+| 2D00h | TMR0_CTRL    | RW     | Регистр управления                      |
+| 2D01h | TMR0_CFG     | RW     | Регистр конфигурации                    |
+| 2D02h | TMR0_PRDH    | RW     | Период счета таймера, старшая часть     |
+| 2D03h | TMR0_PRDM    | RW     | Период счета таймера, старшая часть     |
+| 2D04h | TMR0_PRDL    | RW     | Период счета таймера, младшая часть     |
+| 2D05h | TMR0_VALH    | R      | Текущее значение таймера, старшая часть |
+| 2D06h | TMR0_VALM    | R      | Текущее значение таймера, средняя часть |
+| 2D07h | TMR0_VALL    | R      | Текущее значение таймера, младшая часть |
+| 2D08h | TMR0_MSK     | RW     | Регистр маски прерываний                |
+| 2D09h | TMR0_ST      | R      | Регистр статусов                        |
 
-   <tr>
-    <td  >2D04h </td>
-    <td  >TMR0_PRDL</td>
-    <td  >RW</td>
-    <td  >Период счета таймера, младшая часть</td>
-  </tr>
+#### TIMER1
 
- <tr>
-    <td  >2D05h </td>
-    <td  >TMR0_VALH</td>
-    <td  >R</td>
-    <td  >Текущее значение таймера, старшая часть</td>
-  </tr>
+| Адрес | Аббревиатура | Доступ | Описание                                |
+| ----- | ------------ | ------ | --------------------------------------- |
+| 2D20h | TMR1_CTRL    | RW     | Регистр управления                      |
+| 2D21h | TMR1_CFG     | RW     | Регистр конфигурации                    |
+| 2D22h | TMR1_PRDH    | RW     | Период счета таймера, старшая часть     |
+| 2D23h | TMR1_PRDM    | RW     | Период счета таймера, старшая часть     |
+| 2D24h | TMR1_PRDL    | RW     | Период счета таймера, младшая часть     |
+| 2D25h | TMR1_VALH    | R      | Текущее значение таймера, старшая часть |
+| 2D26h | TMR1_VALM    | R      | Текущее значение таймера, средняя часть |
+| 2D27h | TMR1_VALL    | R      | Текущее значение таймера, младшая часть |
+| 2D28h | TMR1_MSK     | RW     | Регистр маски прерываний                |
+| 2D29h | TMR1_ST      | R      | Регистр статусов                        |
 
-  <tr>
-    <td  >2D06h </td>
-    <td  >TMR0_VALM</td>
-    <td  >R</td>
-    <td  >Текущее значение таймера, средняя часть</td>
-  </tr>
+#### TIMER2
 
-   <tr>
-    <td  >2D07h </td>
-    <td  >TMR0_VALL</td>
-    <td  >R</td>
-    <td  >Текущее значение таймера, младшая часть</td>
-  </tr>
-
-   <tr>
-    <td  >2D08h </td>
-    <td  >TMR0_MSK</td>
-    <td  >RW</td>
-    <td  >Регистр маски прерываний</td>
-  </tr>
-
-   <tr>
-    <td  >2D09h </td>
-    <td  >TMR0_ST</td>
-    <td  >R</td>
-    <td  >Регистр статусов</td>
-  </tr>
-
- <tr>
-     <td  colSpan={4} ><b>TIMER1</b></td>
- </tr>
-
-  <tr>
-    <td  >2D20h </td>
-    <td  >TMR1_CTRL</td>
-    <td  >RW</td>
-    <td  >Регистр управления</td>
-  </tr>
-  
-   <tr>
-    <td  >2D21h </td>
-    <td  >TMR1_CFG</td>
-    <td  >RW</td>
-    <td  >Регистр конфигурации</td>
-  </tr>
-  
-  <tr>
-    <td  >2D22h </td>
-    <td  >TMR1_PRDH</td>
-    <td  >RW</td>
-    <td  >Период счета таймера, старшая часть</td>
-  </tr>
-    
-   <tr>
-    <td  >2D23h </td>
-    <td  >TMR1_PRDM</td>
-    <td  >RW</td>
-    <td  >Период счета таймера, старшая часть</td>
-  </tr>
-
-   <tr>
-    <td  >2D24h </td>
-    <td  >TMR1_PRDL</td>
-    <td  >RW</td>
-    <td  >Период счета таймера, младшая часть</td>
-  </tr>
-
- <tr>
-    <td  >2D25h </td>
-    <td  >TMR1_VALH</td>
-    <td  >R</td>
-    <td  >Текущее значение таймера, старшая часть</td>
-  </tr>
-
-  <tr>
-    <td  >2D26h </td>
-    <td  >TMR1_VALM</td>
-    <td  >R</td>
-    <td  >Текущее значение таймера, средняя часть</td>
-  </tr>
-
-   <tr>
-    <td  >2D27h </td>
-    <td  >TMR1_VALL</td>
-    <td  >R</td>
-    <td  >Текущее значение таймера, младшая часть</td>
-  </tr>
-
-   <tr>
-    <td  >2D28h </td>
-    <td  >TMR1_MSK</td>
-    <td  >RW</td>
-    <td  >Регистр маски прерываний</td>
-  </tr>
-
-   <tr>
-    <td  >2D29h </td>
-    <td  >TMR1_ST</td>
-    <td  >R</td>
-    <td  >Регистр статусов</td>
-  </tr>
-
- <tr>
-     <td  colSpan={4} ><b>TIMER2</b></td>
- </tr>
-
-  <tr>
-    <td  >2D40h </td>
-    <td  >TMR2_CTRL</td>
-    <td  >RW</td>
-    <td  >Регистр управления</td>
-  </tr>
-  
-   <tr>
-    <td  >2D41h </td>
-    <td  >TMR2_CFG</td>
-    <td  >RW</td>
-    <td  >Регистр конфигурации</td>
-  </tr>
-  
-  <tr>
-    <td  >2D42h </td>
-    <td  >TMR2_PRDH</td>
-    <td  >RW</td>
-    <td  >Период счета таймера, старшая часть</td>
-  </tr>
-    
-   <tr>
-    <td  >2D43h </td>
-    <td  >TMR2_PRDM</td>
-    <td  >RW</td>
-    <td  >Период счета таймера, старшая часть</td>
-  </tr>
-
-   <tr>
-    <td  >2D44h </td>
-    <td  >TMR2_PRDL</td>
-    <td  >RW</td>
-    <td  >Период счета таймера, младшая часть</td>
-  </tr>
-
- <tr>
-    <td  >2D45h </td>
-    <td  >TMR2_VALH</td>
-    <td  >R</td>
-    <td  >Текущее значение таймера, старшая часть</td>
-  </tr>
-
-  <tr>
-    <td  >2D46h </td>
-    <td  >TMR2_VALM</td>
-    <td  >R</td>
-    <td  >Текущее значение таймера, средняя часть</td>
-  </tr>
-
-   <tr>
-    <td  >2D47h </td>
-    <td  >TMR2_VALL</td>
-    <td  >R</td>
-    <td  >Текущее значение таймера, младшая часть</td>
-  </tr>
-
-   <tr>
-    <td  >2D48h </td>
-    <td  >TMR2_MSK</td>
-    <td  >RW</td>
-    <td  >Регистр маски прерываний</td>
-  </tr>
-
-   <tr>
-    <td  >2D49h </td>
-    <td  >TMR2_ST</td>
-    <td  >R</td>
-    <td  >Регистр статусов</td>
-  </tr>
-
-</tbody>
-</table>
+| Адрес | Аббревиатура | Доступ | Описание                                |
+| ----- | ------------ | ------ | --------------------------------------- |
+| 2D40h | TMR2_CTRL    | RW     | Регистр управления                      |
+| 2D41h | TMR2_CFG     | RW     | Регистр конфигурации                    |
+| 2D42h | TMR2_PRDH    | RW     | Период счета таймера, старшая часть     |
+| 2D43h | TMR2_PRDM    | RW     | Период счета таймера, старшая часть     |
+| 2D44h | TMR2_PRDL    | RW     | Период счета таймера, младшая часть     |
+| 2D45h | TMR2_VALH    | R      | Текущее значение таймера, старшая часть |
+| 2D46h | TMR2_VALM    | R      | Текущее значение таймера, средняя часть |
+| 2D47h | TMR2_VALL    | R      | Текущее значение таймера, младшая часть |
+| 2D48h | TMR2_MSK     | RW     | Регистр маски прерываний                |
+| 2D49h | TMR2_ST      | R      | Регистр статусов                        |
 
 ### TMRx_CTRL
 
 <table className="table">
 <tbody>
 
-  <tr>
-    <th >Бит</th>
-    <th >7</th>
-    <th >6</th>
-    <th >5</th>
-    <th >4</th>
-    <th >3</th>
-    <th >2</th>
-    <th >1</th>
-    <th >0</th>
-  </tr>
+<tr>
+  <th>Бит</th>
+  <th>7</th>
+  <th>6</th>
+  <th>5</th>
+  <th>4</th>
+  <th>3</th>
+  <th>2</th>
+  <th>1</th>
+  <th>0</th>
+</tr>
 
-   <tr>
-    <th >Назначение</th>
-    <td  colSpan={2} >Резерв</td>
-    <td  >CYCLES</td>
-    <td  >T/C</td>
-    <td  colSpan={2} >MODE</td>
-    <td  >EN_EXT</td>
-    <td  >EN</td>
-  </tr>
+<tr>
+  <th>Назначение</th>
+  <td colSpan={2}>Резерв</td>
+  <td>CYCLES</td>
+  <td>T/C</td>
+  <td colSpan={2}>MODE</td>
+  <td>EN_EXT</td>
+  <td>EN</td>
+</tr>
 
    <tr>
     <th >Начальное значение</th>
@@ -459,26 +271,26 @@ sidebar_position: 12
 <table className="table">
 <tbody>
 
-  <tr>
-    <th >Бит</th>
-    <th >7</th>
-    <th >6</th>
-    <th >5</th>
-    <th >4</th>
-    <th >3</th>
-    <th >2</th>
-    <th >1</th>
-    <th >0</th>
-  </tr>
+<tr>
+  <th>Бит</th>
+  <th>7</th>
+  <th>6</th>
+  <th>5</th>
+  <th>4</th>
+  <th>3</th>
+  <th>2</th>
+  <th>1</th>
+  <th>0</th>
+</tr>
 
-   <tr>
-    <th >Назначение</th>
-    <td  colSpan={4} >Резерв</td>
-    <td  >EVENT_TYPE</td>
-    <td  >FIX_TYPE</td>
-    <td  >STOP_TYPE</td>
-    <td  >START_TYPE</td>
-  </tr>
+<tr>
+  <th>Назначение</th>
+  <td colSpan={4}>Резерв</td>
+  <td>EVENT_TYPE</td>
+  <td>FIX_TYPE</td>
+  <td>STOP_TYPE</td>
+  <td>START_TYPE</td>
+</tr>
 
    <tr>
     <th >Начальное значение</th>
@@ -513,22 +325,22 @@ sidebar_position: 12
 <table className="table">
 <tbody>
 
-  <tr>
-    <th >Бит</th>
-    <th >7</th>
-    <th >6</th>
-    <th >5</th>
-    <th >4</th>
-    <th >3</th>
-    <th >2</th>
-    <th >1</th>
-    <th >0</th>
-  </tr>
+<tr>
+  <th>Бит</th>
+  <th>7</th>
+  <th>6</th>
+  <th>5</th>
+  <th>4</th>
+  <th>3</th>
+  <th>2</th>
+  <th>1</th>
+  <th>0</th>
+</tr>
 
-   <tr>
-    <th >Назначение</th>
-    <td  colSpan={8} >PRD</td>
-  </tr>
+<tr>
+  <th>Назначение</th>
+  <td colSpan={8}>PRD</td>
+</tr>
 
    <tr>
     <th >Начальное значение</th>
@@ -545,22 +357,22 @@ sidebar_position: 12
 <table className="table">
 <tbody>
 
-  <tr>
-    <th >Бит</th>
-    <th >7</th>
-    <th >6</th>
-    <th >5</th>
-    <th >4</th>
-    <th >3</th>
-    <th >2</th>
-    <th >1</th>
-    <th >0</th>
-  </tr>
+<tr>
+  <th>Бит</th>
+  <th>7</th>
+  <th>6</th>
+  <th>5</th>
+  <th>4</th>
+  <th>3</th>
+  <th>2</th>
+  <th>1</th>
+  <th>0</th>
+</tr>
 
-   <tr>
-    <th >Назначение</th>
-    <td  colSpan={8} >PRD</td>
-  </tr>
+<tr>
+  <th>Назначение</th>
+  <td colSpan={8}>PRD</td>
+</tr>
 
    <tr>
     <th >Начальное значение</th>
@@ -577,22 +389,22 @@ sidebar_position: 12
 <table className="table">
 <tbody>
 
-  <tr>
-    <th >Бит</th>
-    <th >7</th>
-    <th >6</th>
-    <th >5</th>
-    <th >4</th>
-    <th >3</th>
-    <th >2</th>
-    <th >1</th>
-    <th >0</th>
-  </tr>
+<tr>
+  <th>Бит</th>
+  <th>7</th>
+  <th>6</th>
+  <th>5</th>
+  <th>4</th>
+  <th>3</th>
+  <th>2</th>
+  <th>1</th>
+  <th>0</th>
+</tr>
 
-   <tr>
-    <th >Назначение</th>
-    <td  colSpan={8} >PRD</td>
-  </tr>
+<tr>
+  <th>Назначение</th>
+  <td colSpan={8}>PRD</td>
+</tr>
 
    <tr>
     <th >Начальное значение</th>
@@ -609,22 +421,22 @@ sidebar_position: 12
 <table className="table">
 <tbody>
 
-  <tr>
-    <th >Бит</th>
-    <th >7</th>
-    <th >6</th>
-    <th >5</th>
-    <th >4</th>
-    <th >3</th>
-    <th >2</th>
-    <th >1</th>
-    <th >0</th>
-  </tr>
+<tr>
+  <th>Бит</th>
+  <th>7</th>
+  <th>6</th>
+  <th>5</th>
+  <th>4</th>
+  <th>3</th>
+  <th>2</th>
+  <th>1</th>
+  <th>0</th>
+</tr>
 
-   <tr>
-    <th >Назначение</th>
-    <td  colSpan={8} >VAL</td>
-  </tr>
+<tr>
+  <th>Назначение</th>
+  <td colSpan={8}>VAL</td>
+</tr>
 
    <tr>
     <th >Начальное значение</th>
@@ -641,22 +453,22 @@ sidebar_position: 12
 <table className="table">
 <tbody>
 
-  <tr>
-    <th >Бит</th>
-    <th >7</th>
-    <th >6</th>
-    <th >5</th>
-    <th >4</th>
-    <th >3</th>
-    <th >2</th>
-    <th >1</th>
-    <th >0</th>
-  </tr>
+<tr>
+  <th>Бит</th>
+  <th>7</th>
+  <th>6</th>
+  <th>5</th>
+  <th>4</th>
+  <th>3</th>
+  <th>2</th>
+  <th>1</th>
+  <th>0</th>
+</tr>
 
-   <tr>
-    <th >Назначение</th>
-    <td  colSpan={8} >VAL</td>
-  </tr>
+<tr>
+  <th>Назначение</th>
+  <td colSpan={8}>VAL</td>
+</tr>
 
    <tr>
     <th >Начальное значение</th>
@@ -673,22 +485,22 @@ sidebar_position: 12
 <table className="table">
 <tbody>
 
-  <tr>
-    <th >Бит</th>
-    <th >7</th>
-    <th >6</th>
-    <th >5</th>
-    <th >4</th>
-    <th >3</th>
-    <th >2</th>
-    <th >1</th>
-    <th >0</th>
-  </tr>
+<tr>
+  <th>Бит</th>
+  <th>7</th>
+  <th>6</th>
+  <th>5</th>
+  <th>4</th>
+  <th>3</th>
+  <th>2</th>
+  <th>1</th>
+  <th>0</th>
+</tr>
 
-   <tr>
-    <th >Назначение</th>
-    <td  colSpan={8} >VAL</td>
-  </tr>
+<tr>
+  <th>Назначение</th>
+  <td colSpan={8}>VAL</td>
+</tr>
 
    <tr>
     <th >Начальное значение</th>
@@ -707,26 +519,26 @@ sidebar_position: 12
 <table className="table">
 <tbody>
 
-  <tr>
-    <th >Бит</th>
-    <th >7</th>
-    <th >6</th>
-    <th >5</th>
-    <th >4</th>
-    <th >3</th>
-    <th >2</th>
-    <th >1</th>
-    <th >0</th>
-  </tr>
+<tr>
+  <th>Бит</th>
+  <th>7</th>
+  <th>6</th>
+  <th>5</th>
+  <th>4</th>
+  <th>3</th>
+  <th>2</th>
+  <th>1</th>
+  <th>0</th>
+</tr>
 
-   <tr>
-    <th >Назначение</th>
-    <td  colSpan={4} >Резерв</td>
-    <td  >STOP_EVENT</td>
-    <td  >START_EVENT</td>
-    <td  >OVW</td>
-    <td  >END_PRD</td>
-  </tr>
+<tr>
+  <th>Назначение</th>
+  <td colSpan={4}>Резерв</td>
+  <td>STOP_EVENT</td>
+  <td>START_EVENT</td>
+  <td>OVW</td>
+  <td>END_PRD</td>
+</tr>
 
    <tr>
     <th >Начальное значение</th>
@@ -748,31 +560,33 @@ sidebar_position: 12
 <table className="table">
 <tbody>
 
-  <tr>
-    <th >Бит</th>
-    <th >7</th>
-    <th >6</th>
-    <th >5</th>
-    <th >4</th>
-    <th >3</th>
-    <th >2</th>
-    <th >1</th>
-    <th >0</th>
-  </tr>
+<tr>
+  <th>Бит</th>
+  <th>7</th>
+  <th>6</th>
+  <th>5</th>
+  <th>4</th>
+  <th>3</th>
+  <th>2</th>
+  <th>1</th>
+  <th>0</th>
+</tr>
 
-   <tr>
-    <th >Назначение</th>
-    <td  colSpan={4} rowSpan={2} >Резерв</td>
-    <td  >STOP_EVENT</td>
-    <td  >START_EVENT</td>
-    <td  >OVW</td>
-    <td  >END_PRD</td>
-  </tr>
+<tr>
+  <th>Назначение</th>
+  <td colSpan={4} rowSpan={2}>
+    Резерв
+  </td>
+  <td>STOP_EVENT</td>
+  <td>START_EVENT</td>
+  <td>OVW</td>
+  <td>END_PRD</td>
+</tr>
 
- <tr>
-    <th >Тип статуса</th>
-    <td  colSpan={4} >EVENT</td>
-  </tr>
+<tr>
+  <th>Тип статуса</th>
+  <td colSpan={4}>EVENT</td>
+</tr>
 
    <tr>
     <th >Начальное значение</th>

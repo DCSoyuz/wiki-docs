@@ -5,7 +5,6 @@ sidebar_label: Программирование
 sidebar_position: 3
 ---
 
-import DocumentFigure from '@site/src/components/ui/DocumentFigure';
 
 ## Создание конфигурации для микросхемы памяти 5400РТ015
 
@@ -17,7 +16,7 @@ import DocumentFigure from '@site/src/components/ui/DocumentFigure';
 2. Нажмите `«Микросхема» – «Загрузить файл сжатого образа ПЛИС»` или `«Загрузить файл
 несжатого образа ПЛИС»` выберите нужный файл в открывшемся окне.
 
-<DocumentFigure src="/img/5400ТС015/programming/dcsprog-load-mem-conf.png" alt=" Выбор файла в DCSProg" caption=" Выбор файла в DCSProg" />
+<DocumentFigure src="/img/5400ТС015/programming/dcsprog-load-mem-conf.png" caption="Выбор файла в DCSProg" />
 
 После успешного добавления, в окне DCSProg будет указан выбранный файл и путь до него.
 
@@ -27,7 +26,7 @@ import DocumentFigure from '@site/src/components/ui/DocumentFigure';
 После успешного создания файлов необходимые файлы для последующей загрузки в микросхему 5400РТ015 будут расположены
 в директории `DCSProg /memory_images/.`
 
-<DocumentFigure src="/img/5400ТС015/programming/dcsprog-load-mem-files.png" alt="Расположение файлов прошивки в папке DCSProg" caption="Расположение файлов прошивки в папке DCSProg" />
+<DocumentFigure src="/img/5400ТС015/programming/dcsprog-load-mem-files.png" caption="Расположение файлов прошивки в папке DCSProg" />
 
 В случае если зашивка создается из сжатого образа, то файлы расположены в директории
 `memory_images/compressed`. Если зашивка создается из несжатого образа, то файлы будут расположены в директории
@@ -63,13 +62,13 @@ import DocumentFigure from '@site/src/components/ui/DocumentFigure';
 2. Нажмите `«Микросхема» – «Загрузить файл несжатого образа ПЛИС»` и выберите нужный файл
    в открывшемся окне.
 
-<DocumentFigure src="/img/5400ТС015/programming/dcsprog-soft-load.png" alt="Загрузка несжатого образа" caption="Загрузка несжатого образа" />
+<DocumentFigure src="/img/5400ТС015/programming/dcsprog-soft-load.png" caption="Загрузка несжатого образа" />
 
 После успешного добавления в окне DCSProg отобразится выбранный файл и путь к нему.
 
 3. Далее нажмите `«Микросхема» – «Записать в ОЗУ ПЛИС несжатый образ»`.
 
-<DocumentFigure src="/img/5400ТС015/programming/dcsprog-soft-prog.png" alt=" Запись в ОЗУ несжатого образа" caption=" Запись в ОЗУ несжатого образа" />
+<DocumentFigure src="/img/5400ТС015/programming/dcsprog-soft-prog.png" caption="Запись в ОЗУ несжатого образа" />
 
 После успешного программирования в DCSProg появится сообщение «ПЛИС запрограммирована
 в режиме SOFT».
@@ -187,13 +186,13 @@ set xc(inout_type) {
 2. Нажмите `«Микросхема» – «Загрузить файл сжатого образа ПЛИС»` и выберите нужный файл
 в открывшемся окне.
 
-<DocumentFigure src="/img/5400ТС015/programming/dcsprog-hard-load.png" alt="Загрузка сжатого образа" caption="Загрузка сжатого образа" />
+<DocumentFigure src="/img/5400ТС015/programming/dcsprog-hard-load.png" caption="Загрузка сжатого образа" />
 
 После успешного добавления, в окне DCSProg будет указан выбранный файл и путь до него.
 
 3. Далее нажмите `«Микросхема» – «Записать в ПЗУ ПЛИС сжатый образ»`.
 
-<DocumentFigure src="/img/5400ТС015/programming/dcsprog-hard-prog.png" alt="Запись в ПЗУ сжатого образа" caption="Запись в ПЗУ сжатого образа" />
+<DocumentFigure src="/img/5400ТС015/programming/dcsprog-hard-prog.png" caption="Запись в ПЗУ сжатого образа" />
 
 После успешного программирования в DCSProg появится сообщение «ПЛИС запрограммирована в режиме HARD».
 

@@ -1,88 +1,126 @@
 ---
-id: mk-keil-debug
-title: Отладка в Keil IDE
-sidebar_label: Отладка в Keil IDE
-sidebar_position: 5
+id: mk-keil
+title: Keil IDE
+sidebar_label: Keil IDE
+sidebar_position: 3
 ---
 
-Настройка отладчика в Keil IDE и руководство по использованию.
+Установка и использование Keil IDE
 
-## Настройка отладчика
+## Установка и настройка Keil IDE
 
-1. Поместить файл _105-003.dll_ из архива DCSProg6 в каталог <code> C:/Keil_v5/C51/BIN/ </code>.
-2. В каталоге <code>C:/Keil_v5/</code> в файле \_TOOLS.ini в разделе C51 найти максимальный номер для TDRV и добавить строку: <br/> <code>TDRV*=BIN\105-003.dll ("5400ТР105-003")</code>, где * – следующий номер после максимального. Далее необходимо сохранить изменения и закрыть файл.
+Перед началом работы необходимо загрузить архивы DCSProg6 и projects_keil с сайта компании ([https://dcsoyuz.ru](https://dcsoyuz.ru) раздел «Программное обеспечение») и извлечь данные на персональный компьютер. Доступ к разделу «Программное обеспечение» предоставляется по запросу на электронную почту (support@dcsoyuz.ru).
+
+Для программирования микросхемы 5400ТР105-003 потребуется программа DCSProg6. Создание конфигурационной последовательности выполняется в ПО Keil MVision C51.
+
+Скачать IDE Keil MVision C51 можно с официального сайта разработчика [https://www.keil.com/download/product/](https://www.keil.com/download/product/)
+
+<DocumentFigure src="/img/5400TP105-003/programming/1.png" caption="Утилита Keil MVision C51" />
+
+1. Установить скачанную программу, используя настройки по умолчанию.
+2. Открыть проект Example.uvproj.
+
+Для открытия проекта в Keil MVision C51 необходимо выбрать меню `Project –> Open Project`.
+
+Путь к файлу проекта в архиве projects_keil `…\Projects\Example\Example.uvproj`.
+
+<DocumentFigure src="/img/5400TP105-003/programming/2.png" caption="Выбор проекта в MVision" />
+
+3. В настройках проекта («Alt+F7») во вкладке «Target» установить размеры памяти ОЗУ и ПЗУ:
+
+- Off-chip Code memory: Start – 0x0000; Size – 0x1000;
+- Off-chip Xdata memory: Start – 0x0000; Size – 0x1100.
+
+<DocumentFigure src="/img/5400TP105-003/programming/3.png" caption="Установка размеров памяти ОЗУ и ПЗУ в настройках проекта" />
+
+<DocumentFigure src="/img/5400TP105-003/programming/4.png" caption="Настройка проекта для создания файла с расширением hex" />
+
+4. В настройках проекта во вкладке «Output» установить галочку «Create HEX File» для создания файла с расширением hex. Нажать «OK».
+
+Установка и настройка ПО для работы с микросхемой 5400ТР105-003 завершена.
+
+В демонстрационной версии проекта Example.uvproj реализована программа с примером работы светодиодов и выводов микросхемы GPIOA_4 – GPIOA_7.
+
+## Создание и обновление файла конфигурации (hex-файл)
+
+Для компиляции тестового проекта выполните команду `«Project» –> «Build Target»` или клавиша F7. Ошибки компиляции будут выведены в окне Build Output.
+
+<DocumentFigure src="/img/5400TP105-003/programming/5.png" caption="Компиляция проекта" />
+
+Для создания или обновления существующего hex-файла выполните команду `Project –> Rebuild all target files`.
+
+В результате выполнения команды будет сформирован файл с расширением hex.
+
+Путь к hex-файлу `…\Projects\Example\Objects\Example.hex`.
+
+<DocumentFigure src="/img/5400TP105-003/programming/6.png" caption="Команда для формирования и обновления hex-файла" />
+
+## Отладка в Keil
+
+### Настройка отладчика
+
+1. Поместить файл _105-003.dll_ из архива DCSProg6 в каталог `C:/Keil_v5/C51/BIN/`.
+2. В каталоге `C:/Keil_v5/` в файле _TOOLS.ini_ в разделе C51 найти максимальный номер для TDRV и добавить строку: `TDRV*=BIN\105-003.dll ("5400ТР105-003")`, где \* – следующий номер после максимального. Далее необходимо сохранить изменения и закрыть файл.
 
 <div className="doc-image-container">
-<figure>
-  <img src="/img/5400TP105-003/keil-debug/toolsini.png" alt="" />
-  <figcaption  className="doc-image-container__image-title">Настройка Keil IDE</figcaption>
-</figure>
+  <figure>
+    <img src="" alt="" />
+    <figcaption className="doc-image-container__image-title"></figcaption>
+  </figure>
 </div>
 
-3. Запустить Keil IDE. В настройках проекта (комбинация Alt+F7 или кнопка «Options for Target» на панели инструментов) во вкладке «Debug» поставить переключатель «Use» и выбрать «Octopus Driver». Ниже установить `«Load Application at Startup»`.
+<DocumentFigure src="/img/5400TP105-003/keil-debug/toolsini.png" caption="Настройка Keil IDE" />
 
-<div className="doc-image-container">
-<figure>
-  <img src="/img/5400TP105-003/keil-debug/1.png" alt="" />
-  <figcaption  className="doc-image-container__image-title">Настройка Keil IDE</figcaption>
-</figure>
-</div>
+3. Запустить Keil IDE. В настройках проекта (комбинация Alt+F7 или кнопка «Options for Target» на панели инструментов) во вкладке «Debug» поставить переключатель «Use» и выбрать «Octopus Driver». Ниже установить `Load Application at Startup`.
+
+<DocumentFigure src="/img/5400TP105-003/keil-debug/1.png" caption="Настройка Keil IDE" />
 
 4. Непосредственно перед запуском отладчика необходимо создать выходной hex-файл отлаживаемой программы <br/> (`«Project» –> «Rebuild all target files»`), подключить программатор DCSProg в USB-порт компьютера, подать на плату питание и частоту.
 
-## Начало работы с отладкой
+### Начало работы с отладкой
 
 Запуск отладчика производится комбинацией клавиш Ctrl+F5. При успешном подключении программатора к отладчику в окне логов будет выведено следующее сообщение:
 
-<div className="doc-image-container">
-<figure>
-  <img src="/img/5400TP105-003/keil-debug/2.png" alt="" />
-  <figcaption  className="doc-image-container__image-title">Лог при успешном подключении программатора</figcaption>
-</figure>
-</div>
+```text showLineNumbers title="Лог при успешном подключении программатора"
+Инициализация программатора
+Программатор подключен
+Запись байта 0x7 на адресу 0x3200 во внешнюю RAM
+Из внешней RAM по адресу 0x3200 считан байт 0x7
+Reset
+```
 
 При неуспешном подключении программатора либо отладчик будет принудительно отключен, либо в окне логов будет выведено следующее сообщение:
 
-<div className="doc-image-container">
-<figure>
-  <img src="/img/5400TP105-003/keil-debug/3.png" alt="" />
-  <figcaption  className="doc-image-container__image-title">Лог при неуспешном сбросе программатора</figcaption>
-</figure>
-</div>
+```text showLineNumbers togleWrap title="Лог при неуспешном сбросе программатора"
+Инициализация программатора
+Программатор подключен
+Запись байта 0x7 на адресу 0x3200 во внешнюю RAM
+Из внешней RAM по адресу 0x3200 считан байт 0xc8
+Reset
+Не получен корректный ответ от микросхемы при Reset, проверьте питание и тактирование
+```
 
 В этом случае необходимо проверить питание и тактирование микросхемы, попробовать заново включить отладчик.
 
-## Возможности отладчика
+### Возможности отладчика
 
 После загрузки программы в микросхему открывается окно с ассемблерным кодом. Если оно
 не открылось, его можно открыть вручную нажатием `«View» –> «Disassembly Window»`. В этом окне можно просматривать ассемблерный код, сопоставленный строкам исходного кода на языке Си. Если окно ассемблерных инструкций изначально отображается по-другому, это можно изменить одиночным нажатием ПКМ по окну ассемблерных инструкций и выбором режима отображения «Mixed Mode».
 
-<div className="doc-image-container">
-<figure>
-  <img src="/img/5400TP105-003/keil-debug/4.png" alt="" />
-  <figcaption  className="doc-image-container__image-title">Пример ассемблерного кода в удобочитаемом виде</figcaption>
-</figure>
-</div>
+<DocumentFigure src="/img/5400TP105-003/keil-debug/4.png" caption="Пример ассемблерного кода в удобочитаемом виде" />
 
-<div className="doc-image-container">
-<figure>
-  <img src="/img/5400TP105-003/keil-debug/5.png" alt="" />
-  <figcaption  className="doc-image-container__image-title">Выбор режима отображения ассемблерных инструкций вместе с Си кодом</figcaption>
-</figure>
-</div>
+<DocumentFigure
+  src="/img/5400TP105-003/keil-debug/5.png"
+  caption="Выбор режима отображения ассемблерных инструкций вместе с Си кодом"
+/>
 
-:::alert Примечание
-При заполнении окна ассемблерных инструкций отладчик не считывает инструкции из микросхемы, а анализирует входной hex-файл. Верификация записанного кода происходит только при команде <a href="/docs/5400TP105-003/programming/mk-keil-debug#команда-flash-download">«Flash Download»</a>
+:::info Примечание
+При заполнении окна ассемблерных инструкций отладчик не считывает инструкции из микросхемы, а анализирует входной hex-файл. Верификация записанного кода происходит только при команде [«Flash Download»](/docs/5400TP105-003/programming/mk-keil#команда-flash-download)
 :::
 
 В отладочном окне в левом верхнем углу находится основная панель инструментов для управления выполнением программы:
 
-<div className="doc-image-container">
-<figure>
-  <img src="/img/5400TP105-003/keil-debug/6.png" alt="" />
-  <figcaption  className="doc-image-container__image-title">Панель для управления исполнением программы</figcaption>
-</figure>
-</div>
+<DocumentFigure src="/img/5400TP105-003/keil-debug/6.png" caption="Панель для управления исполнением программы" />
 
 |     |                                                                                                                                             |
 | --- | ------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -95,45 +133,18 @@ sidebar_position: 5
 
 При нажатии ПКМ на строку в ассемблерном окне или в окне Си кода можно задать PC на эту инструкцию, используя команду «Set Program Counter». При нажатии кнопки «Run» исполнение программы начнется с инструкции, на которую указывает установленный «PC».
 
-<div className="doc-image-container">
-<table className="table">
-<tbody>
-
-  <tr>
-    <td >Установка PC в окне ассемблерного кода</td>
-    <td >Установка PC в окне Си кода</td>
-  </tr>
-  <tr>
-    <td>
-    <img src="/img/5400TP105-003/keil-debug/7.png" alt="" />
-    </td>
-    <td>
-    <img src="/img/5400TP105-003/keil-debug/8.png" alt="" />
-    </td>
-  </tr>
-</tbody>
-</table>
-</div>
+<DocumentFigure src="/img/5400TP105-003/keil-debug/7.png" caption="Установка PC в окне ассемблерного кода" />
+<DocumentFigure src="/img/5400TP105-003/keil-debug/8.png" caption="Установка PC в окне Си кода" />
 
 В левой части отладочного окна можно отслеживать состояние SFR регистров ядра 8051. При остановке исполнения программы (принудительно или по брейкпоинту) происходит чтение значений и обновление окна SFR регистров. В остановленном состоянии можно изменять значения SFR регистров, используя данное окно.
 
-<div className="doc-image-container">
-<figure>
-  <img src="/img/5400TP105-003/keil-debug/9.png" alt="" />
-  <figcaption  className="doc-image-container__image-title">Окно SFR регистров ядра 8051</figcaption>
-</figure>
-</div>
+<DocumentFigure src="/img/5400TP105-003/keil-debug/9.png" caption="Окно SFR регистров ядра 8051" />
 
-## Использование точек останова
+### Использование точек останова
 
 Отладчик поддерживает до четырёх брейкпоинтов одновременно. Чтобы установить/удалить брейкпоинт необходимо в области кода слева от нужной строки нажать ЛКМ.
 
-<div className="doc-image-container">
-<figure>
-  <img src="/img/5400TP105-003/keil-debug/10.png" alt="" />
-  <figcaption  className="doc-image-container__image-title">Точка останова</figcaption>
-</figure>
-</div>
+<DocumentFigure src="/img/5400TP105-003/keil-debug/10.png" caption="Точка останова" />
 
 :::info Примечание
 Команда «Run to Cursor Line» использует брейкпоинт, поэтому при использовании этой команды необходимо убедиться, что в данный момент установлено максимум три брейкпоинта.
@@ -144,52 +155,32 @@ sidebar_position: 5
 при использовании этой команды необходимо убедиться, что в данный момент установлено максимум три брейкпоинта.
 :::
 
-## Просмотр состояния переменных
+### Просмотр состояния переменных
 
 1. Открыть окно с отслеживанием переменных можно по нажатию `«View» –> «Watch Windows» –> «Watch 1»`. Снизу отладочного окна появится вкладка «Watch 1».
 2. В данной вкладке можно ввести название переменной в столбец «Name», состояние которой необходимо отслеживать.
 3. При успешном добавлении переменной будет отображено её значение и тип, при неуспешном добавлении в столбце «Value» будет отображаться «cannot evaluate».
 4. Считывание переменной происходит при остановке программы.
 
-<div className="doc-image-container">
-<figure>
-  <img src="/img/5400TP105-003/keil-debug/11.png" alt="" />
-  <figcaption  className="doc-image-container__image-title">Окно для отслеживания переменных</figcaption>
-</figure>
-</div>
+<DocumentFigure src="/img/5400TP105-003/keil-debug/11.png" caption="Окно для отслеживания переменных" />
 
 :::info Примечание
 При помощи этого окна можно изменять состояние переменных при остановленной программе. Если переменная хранится во внутренней ОЗУ, то состояние меняется, если переменная хранится во внешней ОЗУ (ключевое слово «xdata»), то её состояние не изменяется.
 :::
 
-## Команда «Flash Download»
+### Команда Flash Download
 
 Для загрузки программы из Keil IDE в микросхему необходимо в настройках проекта (Alt+F7) во вкладке «Utilities» в меню настроек «Flash Download» указать следующие настройки:
 
-<div className="doc-image-container">
-<figure>
-  <img src="/img/5400TP105-003/keil-debug/12.png" alt="" />
-  <figcaption  className="doc-image-container__image-title">Настройки проекта для включения возможности загружать программу сразу из Keil IDE</figcaption>
-</figure>
-</div>
+<DocumentFigure src="/img/5400TP105-003/keil-debug/12.png" caption="Настройки проекта для включения возможности загружать программу сразу из Keil IDE" />
 
 На панели инструментов окна Keil IDE есть кнопка, которая очищает память программ, заполняя ее нулями, затем программа загружается в микросхему, в конце программа считывается из микросхемы и по байтам сравнивается с тем, что должно быть загружено.
 
-<div className="doc-image-container">
-<figure>
-  <img src="/img/5400TP105-003/keil-debug/13.png" alt="" />
-  <figcaption  className="doc-image-container__image-title">Кнопка «Flash Download» на панели инструментов Keil IDE</figcaption>
-</figure>
-</div>
+<DocumentFigure src="/img/5400TP105-003/keil-debug/13.png" caption="Кнопка «Flash Download» на панели инструментов Keil IDE" />
 
 При успешном подключении к программатору, успешной записи и верификации загруженной в микросхему программы в окне логов будет выведено сообщение о том, что все байты загружаемой программы совпали.
 
-<div className="doc-image-container">
-<figure>
-  <img src="/img/5400TP105-003/keil-debug/14.png" alt="" />
-  <figcaption  className="doc-image-container__image-title">Cообщение в окне логов о том, что все 249 байт программы были загружены</figcaption>
-</figure>
-</div>
+<DocumentFigure src="/img/5400TP105-003/keil-debug/14.png" caption="Cообщение в окне логов о том, что все 249 байт программы были загружены" />
 
 При обнаружении несовпадений байтов программы об этом также будет сообщено в окне логов.
 В таком случае рекомендуется заново подать питание и тактирование микросхемы и попробовать снова загрузить программу.

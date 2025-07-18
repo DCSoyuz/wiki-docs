@@ -17,12 +17,7 @@ sidebar_position: 5
 
 ## Структурная схема 
 
-<div className="doc-image-container">
-<figure>
-  <img src="/img/5400TP105-003/onewire/OWI_структурная_схема.svg" alt="" />
-  <figcaption  className="doc-image-container__image-title">Структурная схема 1-Wire</figcaption>
-</figure>
-</div>
+<DocumentFigure src="/img/5400TP105-003/onewire/OWI_структурная_схема.svg" caption="Структурная схема 1-Wire" />
 
 OWI состоит из следующих блоков:
 
@@ -42,39 +37,19 @@ OWI состоит из следующих блоков:
 
 Модуль OWI позволяет включить маскирование импульса присутствия, генерируемого ведомым устройством, установив бит PPM регистра OWI*CTRL. При установленном бите PPM модуль OWI генерирует импульс присутствия (пунктирная линия), который начинается с конца *t_PPMS* и длится до конца \_t_PPME*.
 
-<div className="doc-image-container">
-<figure>
-  <img src="/img/5400TP105-003/onewire/OWI_сброс_присутствие.svg" alt="" />
-  <figcaption  className="doc-image-container__image-title">Цикл сброса/обнаружения присутствия</figcaption>
-</figure>
-</div>
+<DocumentFigure src="/img/5400TP105-003/onewire/OWI_сброс_присутствие.svg" caption="Цикл сброса/обнаружения присутствия" />
 
 Тайм-слот записи нуля состоит из двух этапов: ведущий подтягивает линию в течение _t_W0L_, далее следует время восстановления _t_REC0_. Сумма времени _t_W0L_ и _t_REC0_ равна длительности тайм-слота _t_SLOT_.
 
-<div className="doc-image-container">
-<figure>
-  <img src="/img/5400TP105-003/onewire/OWI_запись_0.svg" alt="" />
-  <figcaption  className="doc-image-container__image-title">Тайм-слот записи нуля</figcaption>
-</figure>
-</div>
+<DocumentFigure src="/img/5400TP105-003/onewire/OWI_запись_0.svg" caption="Тайм-слот записи нуля" />
 
 Тайм-слот записи единицы также состоит из двух этапов: ведущий подтягивает линию в течение _t_W1L_, затем ожидается завершение тайм-слота.
 
-<div className="doc-image-container">
-<figure>
-  <img src="/img/5400TP105-003/onewire/OWI_запись_1.svg" alt="" />
-  <figcaption  className="doc-image-container__image-title">Тайм-слот записи единицы</figcaption>
-</figure>
-</div>
+<DocumentFigure src="/img/5400TP105-003/onewire/OWI_запись_1.svg" caption="Тайм-слот записи единицы" />
 
-Тайм-слот чтения состоит из трех этапов: ведущий подтягивает линию к низкому уровню в течение _t_W1L_, ведомый устанавливает уровень на линии, после чего ожидается завершение тайм-слота. В течение *t_MRS* модуль OWI осуществляет выборку напряжения вывода 1W*IO. Следует иметь ввиду, что ведомое устройство, отвечая нулем, начинает устанавливать низкий уровень на линии 1W_IO до того, как истечет время \_t_W1L*.
+Тайм-слот чтения состоит из трех этапов: ведущий подтягивает линию к низкому уровню в течение _t_W1L_, ведомый устанавливает уровень на линии, после чего ожидается завершение тайм-слота. В течение *t_MRS* модуль OWI осуществляет выборку напряжения вывода 1W\*IO. Следует иметь ввиду, что ведомое устройство, отвечая нулем, начинает устанавливать низкий уровень на линии 1W*IO до того, как истечет время \_t_W1L*.
 
-<div className="doc-image-container">
-<figure>
-  <img src="/img/5400TP105-003/onewire/OWI_чтение_данных.svg" alt="" />
-  <figcaption  className="doc-image-container__image-title">Тайм-слот чтения</figcaption>
-</figure>
-</div>
+<DocumentFigure src="/img/5400TP105-003/onewire/OWI_чтение_данных.svg" caption="Тайм-слот чтения" />
 
 <table className="table">
 <tbody>
@@ -87,212 +62,218 @@ OWI состоит из следующих блоков:
     <th >Макс</th>
   </tr>
 
-  <tr>
-    <td >T_OWI</td>
-    <td >Внутренний период<br/>синхросигнала модуля, мкс</td>
-    <td >Для достижения данного периода делитель входной системной частоты настроить в соответствии с таблицей регистра <a href="#owi_prcr">OWI_PRCR</a></td>
-    <td >0,8</td>
-    <td >1</td>
-  </tr>
+<tr>
+  <td>T_OWI</td>
+  <td>
+    Внутренний период
+    <br />
+    синхросигнала модуля, мкс
+  </td>
+  <td>
+    Для достижения данного периода делитель входной системной частоты настроить в соответствии с таблицей регистра <a href="#owi_prcr">OWI_PRCR</a>
+  </td>
+  <td>0,8</td>
+  <td>1</td>
+</tr>
 
-  <tr>
-    <td rowSpan={4} >t_SLOT</td>
-    <td rowSpan={4} >Длительность тайм-слота, мкс</td>
-  </tr>
+<tr>
+  <td rowSpan={4}>t_SLOT</td>
+  <td rowSpan={4}>Длительность тайм-слота, мкс</td>
+</tr>
 
-  <tr>
-    <td >Стандартная скорость передачи, LLM = 0</td>
-    <td >56</td>
-    <td >70</td>
-  </tr>
+<tr>
+  <td>Стандартная скорость передачи, LLM = 0</td>
+  <td>56</td>
+  <td>70</td>
+</tr>
 
-  <tr>
-    <td >Стандартная скорость передачи, LLM = 1</td>
-    <td >64</td>
-    <td >80</td>
-  </tr>
+<tr>
+  <td>Стандартная скорость передачи, LLM = 1</td>
+  <td>64</td>
+  <td>80</td>
+</tr>
 
-  <tr>
-    <td >Ускоренная передача</td>
-    <td >8</td>
-    <td >10</td>
-  </tr>
+<tr>
+  <td>Ускоренная передача</td>
+  <td>8</td>
+  <td>10</td>
+</tr>
 
-  <tr>
-    <td rowSpan={3} >t_W0L</td>
-    <td rowSpan={3} >Время низкого уровня тайм-слота записи нуля (Write-zero Low time), мкс</td>
-  </tr>
+<tr>
+  <td rowSpan={3}>t_W0L</td>
+  <td rowSpan={3}>Время низкого уровня тайм-слота записи нуля (Write-zero Low time), мкс</td>
+</tr>
 
-  <tr>
-    <td >Стандартная скорость передачи</td>
-    <td >48</td>
-    <td >60</td>
-  </tr>
+<tr>
+  <td>Стандартная скорость передачи</td>
+  <td>48</td>
+  <td>60</td>
+</tr>
 
-  <tr>
-    <td >Ускоренная передача</td>
-    <td >6,4</td>
-    <td >8,0</td>
-  </tr>
+<tr>
+  <td>Ускоренная передача</td>
+  <td>6,4</td>
+  <td>8,0</td>
+</tr>
 
-  <tr>
-    <td rowSpan={4} >t_W1L</td>
-    <td rowSpan={4} >Время низкого уровня тайм-слота записи единицы/чтения (Write-one/read Low time), мкс</td>
-  </tr>
+<tr>
+  <td rowSpan={4}>t_W1L</td>
+  <td rowSpan={4}>Время низкого уровня тайм-слота записи единицы/чтения (Write-one/read Low time), мкс</td>
+</tr>
 
-  <tr>
-    <td >Стандартная скорость передачи, LLM = 0</td>
-    <td >4,8</td>
-    <td >6,0</td>
-  </tr>
+<tr>
+  <td>Стандартная скорость передачи, LLM = 0</td>
+  <td>4,8</td>
+  <td>6,0</td>
+</tr>
 
-  <tr>
-    <td >Стандартная скорость передачи, LLM = 1</td>
-    <td >6,4</td>
-    <td >8,0</td>
-  </tr>
+<tr>
+  <td>Стандартная скорость передачи, LLM = 1</td>
+  <td>6,4</td>
+  <td>8,0</td>
+</tr>
 
-  <tr>
-    <td >Ускоренная передача</td>
-    <td >0,8</td>
-    <td >1,0</td>
-  </tr>
+<tr>
+  <td>Ускоренная передача</td>
+  <td>0,8</td>
+  <td>1,0</td>
+</tr>
 
-  <tr>
-    <td rowSpan={4} >t_MRS</td>
-    <td rowSpan={4} >Время выборки тайм-слота чтения (Master Read Sample time), мкс</td>
-  </tr>
+<tr>
+  <td rowSpan={4}>t_MRS</td>
+  <td rowSpan={4}>Время выборки тайм-слота чтения (Master Read Sample time), мкс</td>
+</tr>
 
-  <tr>
-    <td >Стандартная скорость передачи, LLM = 0</td>
-    <td >12</td>
-    <td >15</td>
-  </tr>
+<tr>
+  <td>Стандартная скорость передачи, LLM = 0</td>
+  <td>12</td>
+  <td>15</td>
+</tr>
 
-  <tr>
-    <td >Стандартная скорость передачи, LLM = 1</td>
-    <td >19,2</td>
-    <td >24</td>
-  </tr>
+<tr>
+  <td>Стандартная скорость передачи, LLM = 1</td>
+  <td>19,2</td>
+  <td>24</td>
+</tr>
 
-  <tr>
-    <td >Ускоренная передача</td>
-    <td >1,6</td>
-    <td >2,0</td>
-  </tr>
+<tr>
+  <td>Ускоренная передача</td>
+  <td>1,6</td>
+  <td>2,0</td>
+</tr>
 
-  <tr>
-    <td rowSpan={4} >t_REC0</td>
-    <td rowSpan={4} >Время восстановления уровня тайм-слота записи нуля (Write-zero Recovery time), мкс</td>
-  </tr>
+<tr>
+  <td rowSpan={4}>t_REC0</td>
+  <td rowSpan={4}>Время восстановления уровня тайм-слота записи нуля (Write-zero Recovery time), мкс</td>
+</tr>
 
-  <tr>
-    <td >Стандартная скорость передачи, LLM = 0</td>
-    <td >8</td>
-    <td >10</td>
-  </tr>
+<tr>
+  <td>Стандартная скорость передачи, LLM = 0</td>
+  <td>8</td>
+  <td>10</td>
+</tr>
 
-  <tr>
-    <td >Стандартная скорость передачи, LLM = 1</td>
-    <td >16</td>
-    <td >20</td>
-  </tr>
+<tr>
+  <td>Стандартная скорость передачи, LLM = 1</td>
+  <td>16</td>
+  <td>20</td>
+</tr>
 
-  <tr>
-    <td >Ускоренная передача</td>
-    <td >1,6</td>
-    <td >2,0</td>
-  </tr>
+<tr>
+  <td>Ускоренная передача</td>
+  <td>1,6</td>
+  <td>2,0</td>
+</tr>
 
-  <tr>
-    <td rowSpan={3} >t_RSTL</td>
-    <td rowSpan={3} >Время низкого уровня цикла сброса (Reset Low time), мкс</td>
-  </tr>
+<tr>
+  <td rowSpan={3}>t_RSTL</td>
+  <td rowSpan={3}>Время низкого уровня цикла сброса (Reset Low time), мкс</td>
+</tr>
 
-  <tr>
-    <td >Стандартная скорость передачи</td>
-    <td >480</td>
-    <td >600</td>
-  </tr>
+<tr>
+  <td>Стандартная скорость передачи</td>
+  <td>480</td>
+  <td>600</td>
+</tr>
 
-  <tr>
-    <td >Ускоренная передача</td>
-    <td >56</td>
-    <td >70</td>
-  </tr>
+<tr>
+  <td>Ускоренная передача</td>
+  <td>56</td>
+  <td>70</td>
+</tr>
 
-  <tr>
-    <td rowSpan={3} >t_RSTH</td>
-    <td rowSpan={3} >Время высокого уровня цикла сброса (Reset High time), мкс</td>
-  </tr>
+<tr>
+  <td rowSpan={3}>t_RSTH</td>
+  <td rowSpan={3}>Время высокого уровня цикла сброса (Reset High time), мкс</td>
+</tr>
 
-  <tr>
-    <td >Стандартная скорость передачи</td>
-    <td >384</td>
-    <td >480</td>
-  </tr>
+<tr>
+  <td>Стандартная скорость передачи</td>
+  <td>384</td>
+  <td>480</td>
+</tr>
 
-  <tr>
-    <td >Ускоренная передача</td>
-    <td >46,4</td>
-    <td >58</td>
-  </tr>
+<tr>
+  <td>Ускоренная передача</td>
+  <td>46,4</td>
+  <td>58</td>
+</tr>
 
-  <tr>
-    <td rowSpan={3} >t_PDW</td>
-    <td rowSpan={3} >Время ожидания цикла присутствия (Presence-Detect Wait time), мкс</td>
-  </tr>
+<tr>
+  <td rowSpan={3}>t_PDW</td>
+  <td rowSpan={3}>Время ожидания цикла присутствия (Presence-Detect Wait time), мкс</td>
+</tr>
 
-  <tr>
-    <td >Стандартная скорость передачи</td>
-    <td >8,0</td>
-    <td >10</td>
-  </tr>
+<tr>
+  <td>Стандартная скорость передачи</td>
+  <td>8,0</td>
+  <td>10</td>
+</tr>
 
-  <tr>
-    <td >Ускоренная передача</td>
-    <td >1,6</td>
-    <td >2,0</td>
-  </tr>
+<tr>
+  <td>Ускоренная передача</td>
+  <td>1,6</td>
+  <td>2,0</td>
+</tr>
 
-  <tr>
-    <td rowSpan={4} >t_PDSW</td>
-    <td rowSpan={4} >Время выборки цикла присутствия (Presence-Detect Sample Window), мкс</td>
-  </tr>
+<tr>
+  <td rowSpan={4}>t_PDSW</td>
+  <td rowSpan={4}>Время выборки цикла присутствия (Presence-Detect Sample Window), мкс</td>
+</tr>
 
-  <tr>
-    <td >Стандартная скорость передачи, LLM = 0</td>
-    <td >48,8</td>
-    <td >61</td>
-  </tr>
+<tr>
+  <td>Стандартная скорость передачи, LLM = 0</td>
+  <td>48,8</td>
+  <td>61</td>
+</tr>
 
-  <tr>
-    <td >Стандартная скорость передачи, LLM = 1</td>
-    <td >60,8</td>
-    <td >76</td>
-  </tr>
+<tr>
+  <td>Стандартная скорость передачи, LLM = 1</td>
+  <td>60,8</td>
+  <td>76</td>
+</tr>
 
-  <tr>
-    <td >Ускоренная передача</td>
-    <td >6,4</td>
-    <td >8,0</td>
-  </tr>
+<tr>
+  <td>Ускоренная передача</td>
+  <td>6,4</td>
+  <td>8,0</td>
+</tr>
 
-  <tr>
-    <td >T_PPMS</td>
-    <td >Время начала маскированного цикла присутствия (Presence-Pulse Mask Start), мкс</td>
-    <td >Стандартная скорость передачи</td>
-    <td >16</td>
-    <td >20</td>
-  </tr>
+<tr>
+  <td>T_PPMS</td>
+  <td>Время начала маскированного цикла присутствия (Presence-Pulse Mask Start), мкс</td>
+  <td>Стандартная скорость передачи</td>
+  <td>16</td>
+  <td>20</td>
+</tr>
 
-   <tr>
-    <td >T_PPME</td>
-    <td >Время завершения маскированного цикла присутствия (Presence-Pulse Mask End), мкс</td>
-    <td >Стандартная скорость передачи</td>
-    <td >72</td>
-    <td >90</td>
-  </tr>
+<tr>
+  <td>T_PPME</td>
+  <td>Время завершения маскированного цикла присутствия (Presence-Pulse Mask End), мкс</td>
+  <td>Стандартная скорость передачи</td>
+  <td>72</td>
+  <td>90</td>
+</tr>
 
 </tbody>
 </table>
@@ -329,108 +310,20 @@ OWI состоит из следующих блоков:
 
 Для завершения одной процедуры поиска ведущий должен передать 16 байт, построенных согласно таблице 10. Каждый байт, записанный в регистр передатчика, содержит полубайт данных решений несоответствий. В конце каждой процедуры ведущий узнает идентификатор одного ведомого устройства.
 
-<table className="table">
-<tbody>
+| № байта | Буфера     | Бит 7 | Бит 6 | Бит 5 | Бит 4 | Бит 3 | Бит 2 | Бит 1 | Бит 0 |
+| ------- | ---------- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- |
+| 1       | Передатчик | r3    | x     | r2    | x     | r1    | x     | r0    | x     |
+|         | Приемник   | ID3   | d3    | ID2   | d2    | ID1   | d1    | ID0   | d0    |
+| 2       | Передатчик | r3    | x     | r2    | x     | r1    | x     | r0    | x     |
+|         | Приемник   | ID3   | d3    | ID2   | d2    | ID1   | d1    | ID0   | d0    |
+| ...     | ...        | ...   | ...   | ...   | ...   | ...   | ...   | ...   | ...   |
+| 16      | Передатчик | r63   | x     | r62   | x     | r61   | x     | r60   | x     |
+|         | Приемник   | ID63  | d3    | ID62  | d2    | ID61  | d1    | ID60  | d60   |
 
-  <tr>
-    <th >№ байта</th>
-    <th >Буфера</th>
-    <th >Бит 7</th>
-    <th >Бит 6</th>
-    <th >Бит 5</th>
-    <th >Бит 4</th>
-    <th >Бит 3</th>
-    <th >Бит 2</th>
-    <th >Бит 1</th>
-    <th >Бит 0</th>
-  </tr>
-
-   <tr>
-    <td rowSpan={2}>1</td> 
-    <td >Передатчик</td>
-    <td >r3</td>
-    <td >x</td>
-    <td >r2</td>
-    <td >x</td>
-    <td >r1</td>
-    <td >x</td>
-    <td >r0</td>
-    <td >x</td>
-  </tr>
-  
-   <tr>
-    <td >Приемник</td>
-    <td >ID3</td>
-    <td >d3</td>
-    <td >ID2</td>
-    <td >d2</td>
-    <td >ID1</td>
-    <td >d1</td>
-    <td >ID0</td>
-    <td >d0</td>
-  </tr>
-   <tr>
-    <td rowSpan={2}>2</td> 
-    <td >Передатчик</td>
-    <td >r3</td>
-    <td >x</td>
-    <td >r2</td>
-    <td >x</td>
-    <td >r1</td>
-    <td >x</td>
-    <td >r0</td>
-    <td >x</td>
-  </tr>
-  
-   <tr>
-    <td >Приемник</td>
-    <td >ID3</td>
-    <td >d3</td>
-    <td >ID2</td>
-    <td >d2</td>
-    <td >ID1</td>
-    <td >d1</td>
-    <td >ID0</td>
-    <td >d0</td>
-  </tr>
-     <tr>
-    <td colSpan={10} >...</td> 
-  </tr>
-  <tr>
-    <td rowSpan={2}>16</td> 
-    <td >Передатчик</td>
-    <td >r63</td>
-    <td >x</td>
-    <td >r62</td>
-    <td >x</td>
-    <td >r61</td>
-    <td >x</td>
-    <td >r60</td>
-    <td >x</td>
-  </tr>
-  
-   <tr>
-    <td >Приемник</td>
-    <td >ID63</td>
-    <td >d3</td>
-    <td >ID62</td>
-    <td >d2</td>
-    <td >ID61</td>
-    <td >d1</td>
-    <td >ID60</td>
-    <td >d60</td>
-  </tr>
-  
-</tbody>
-</table>
-
-x – биты, которые не имеют значения;
-
-r_n – биты, которые выдаст ведущий при несоответствии идентификаторов;
-
-d_n – флаги несоответствия (равен «1», если есть несоответствие или нет ответа);
-
-ID_n – биты фактически выбранного идентификатора.
+- x – биты, которые не имеют значения;
+- r_n – биты, которые выдаст ведущий при несоответствии идентификаторов;
+- d_n – флаги несоответствия (равен «1», если есть несоответствие или нет ответа);
+- ID_n – биты фактически выбранного идентификатора.
 
 Для каждого бита (с 0 по 63) ведущий генерирует следующие три тайм-слота:
 
@@ -500,26 +393,26 @@ ROM4 = 00010001…
 <table className="table">
 <tbody>
 
-  <tr>
-    <th >Бит</th>
-    <th >7</th>
-    <th >6</th>
-    <th >5</th>
-    <th >4</th>
-    <th >3</th>
-    <th >2</th>
-    <th >1</th>
-    <th >0</th>
-  </tr>
+<tr>
+  <th>Бит</th>
+  <th>7</th>
+  <th>6</th>
+  <th>5</th>
+  <th>4</th>
+  <th>3</th>
+  <th>2</th>
+  <th>1</th>
+  <th>0</th>
+</tr>
 
-   <tr>
-    <th >Назначение</th>
-    <td  colSpan={4} >Резерв</td>
-    <td  >OW_IN</td>
-    <td  >FOW</td>
-    <td  >SRA</td>
-    <td  >1WR</td>
-  </tr>
+<tr>
+  <th>Назначение</th>
+  <td colSpan={4}>Резерв</td>
+  <td>OW_IN</td>
+  <td>FOW</td>
+  <td>SRA</td>
+  <td>1WR</td>
+</tr>
 
    <tr>
     <th >Начальное значение</th>
@@ -566,22 +459,22 @@ ROM4 = 00010001…
 <table className="table">
 <tbody>
 
-  <tr>
-    <th >Бит</th>
-    <th >7</th>
-    <th >6</th>
-    <th >5</th>
-    <th >4</th>
-    <th >3</th>
-    <th >2</th>
-    <th >1</th>
-    <th >0</th>
-  </tr>
+<tr>
+  <th>Бит</th>
+  <th>7</th>
+  <th>6</th>
+  <th>5</th>
+  <th>4</th>
+  <th>3</th>
+  <th>2</th>
+  <th>1</th>
+  <th>0</th>
+</tr>
 
-   <tr>
-    <th >Назначение</th>
-    <td  colSpan={8} >DATA</td>
-  </tr>
+<tr>
+  <th>Назначение</th>
+  <td colSpan={8}>DATA</td>
+</tr>
 
    <tr>
     <th >Начальное значение</th>
@@ -597,17 +490,17 @@ ROM4 = 00010001…
 <table className="table">
 <tbody>
 
-  <tr>
-    <th >Бит</th>
-    <th >7</th>
-    <th >6</th>
-    <th >5</th>
-    <th >4</th>
-    <th >3</th>
-    <th >2</th>
-    <th >1</th>
-    <th >0</th>
-  </tr>
+<tr>
+  <th>Бит</th>
+  <th>7</th>
+  <th>6</th>
+  <th>5</th>
+  <th>4</th>
+  <th>3</th>
+  <th>2</th>
+  <th>1</th>
+  <th>0</th>
+</tr>
 
    <tr>
     <th >Назначение</th>
@@ -622,13 +515,13 @@ ROM4 = 00010001…
 
   </tr>
 
-  <tr>
-    <th >Тип статуса</th>
-    <td  >EVENT</td>
-    <td  >EVENT</td>
-    <td  colSpan={5} >FLAG</td>
-    <td  >EVENT</td>
-  </tr>
+<tr>
+  <th>Тип статуса</th>
+  <td>EVENT</td>
+  <td>EVENT</td>
+  <td colSpan={5}>FLAG</td>
+  <td>EVENT</td>
+</tr>
 
    <tr>
     <th >Начальное значение</th>
@@ -667,34 +560,34 @@ ROM4 = 00010001…
 <table className="table">
 <tbody>
 
-  <tr>
-    <th >Бит</th>
-    <th >7</th>
-    <th >6</th>
-    <th >5</th>
-    <th >4</th>
-    <th >3</th>
-    <th >2</th>
-    <th >1</th>
-    <th >0</th>
-  </tr>
+<tr>
+  <th>Бит</th>
+  <th>7</th>
+  <th>6</th>
+  <th>5</th>
+  <th>4</th>
+  <th>3</th>
+  <th>2</th>
+  <th>1</th>
+  <th>0</th>
+</tr>
 
-   <tr>
-    <th >Назначение</th>
-    <td  >OW_LOW</td>
-    <td  >OW_SHORT</td>
-    <td  >RSRF</td>
-    <td  >RBF</td>
-    <td  >TEMT</td>
-    <td  >TBE</td>
-    <td  >Резерв</td>
-    <td  >PD</td>
-  </tr>
+<tr>
+  <th>Назначение</th>
+  <td>OW_LOW</td>
+  <td>OW_SHORT</td>
+  <td>RSRF</td>
+  <td>RBF</td>
+  <td>TEMT</td>
+  <td>TBE</td>
+  <td>Резерв</td>
+  <td>PD</td>
+</tr>
 
-   <tr>
-    <th >Начальное значение</th>
-    <td  colSpan={8} >0</td>
-  </tr>
+<tr>
+  <th>Начальное значение</th>
+  <td colSpan={8}>0</td>
+</tr>
 
   </tbody>
 </table>
@@ -711,25 +604,25 @@ ROM4 = 00010001…
 <table className="table">
 <tbody>
 
-  <tr>
-    <th >Бит</th>
-    <th >7</th>
-    <th >6</th>
-    <th >5</th>
-    <th >4</th>
-    <th >3</th>
-    <th >2</th>
-    <th >1</th>
-    <th >0</th>
-  </tr>
+<tr>
+  <th>Бит</th>
+  <th>7</th>
+  <th>6</th>
+  <th>5</th>
+  <th>4</th>
+  <th>3</th>
+  <th>2</th>
+  <th>1</th>
+  <th>0</th>
+</tr>
 
-   <tr>
-    <th >Назначение</th>
-    <td  >CLK_EN</td>
-    <td  colSpan={2} >Резерв</td>
-    <td  colSpan={3} >DIV</td>
-    <td  colSpan={2} >PRE</td>
-  </tr>
+<tr>
+  <th>Назначение</th>
+  <td>CLK_EN</td>
+  <td colSpan={2}>Резерв</td>
+  <td colSpan={3}>DIV</td>
+  <td colSpan={2}>PRE</td>
+</tr>
 
    <tr>
     <th >Начальное значение</th>
@@ -762,154 +655,44 @@ ROM4 = 00010001…
 - 01b – _f_clk_/3;
 - 00b – _f_clk_.
 
-Делитель и предделитель работают совместно.
-
-<table className="table">
-<tbody>
-
-<tr>
- <th rowSpan={2} >Мин. fclk, МГц</th>
-    <th rowSpan={2}>Макс. fclk, МГц</th>
-    <th rowSpan={2}>Макс. погрешность fclk, %</th>
-    <th rowSpan={2}>Коэф. деления</th>
-    <th colSpan={3}>DIV</th>
-    <th colSpan={2}>PRE</th>
-</tr>
-
-  <tr>
-    <td >2</td>
-    <td  >1</td>
-    <td  >0</td>
-    <td  >1</td>
-    <td  >0</td>
-  </tr>
-  
-<tr>
-    <td  >1</td>
-    <td  >1,25</td>
-    <td  >25</td>
-    <td  >1</td>
-    <td  >0</td>
-    <td  >0</td>
-    <td  >0</td>
-    <td  >0</td>
-    <td  >0</td>
-  </tr>
-  
-<tr>
-    <td  >2</td>
-    <td  >2,5</td>
-    <td  >25</td>
-    <td  >2</td>
-    <td  >0</td>
-    <td  >0</td>
-    <td  >1</td>
-    <td  >0</td>
-    <td  >0</td>
-  </tr>
-
-  <tr>
-    <td  >3</td>
-    <td  >3,75</td>
-    <td  >25</td>
-    <td  >3</td>
-    <td  >0</td>
-    <td  >0</td>
-    <td  >0</td>
-    <td  >0</td>
-    <td  >1</td>
-  </tr>
-  
-  <tr>
-    <td  >4</td>
-    <td  >больше 5 </td>
-    <td  >25</td>
-    <td  >4</td>
-    <td  >0</td>
-    <td  >1</td>
-    <td  >0</td>
-    <td  >0</td>
-    <td  >0</td>
-  </tr>
-
-  <tr>
-    <td  >5</td>
-    <td  >больше 6 </td>
-    <td  >20</td>
-    <td  >5</td>
-    <td  >0</td>
-    <td  >0</td>
-    <td  >0</td>
-    <td  >1</td>
-    <td  >0</td>
-  </tr>
-
-  <tr>
-    <td  >6</td>
-    <td  >больше 7 </td>
-    <td  >17</td>
-    <td  >6</td>
-    <td  >0</td>
-    <td  >0</td>
-    <td  >1</td>
-    <td  >0</td>
-    <td  >1</td>
-  </tr>
-
-  <tr>
-    <td  >7</td>
-    <td  >больше 8 </td>
-    <td  >14</td>
-    <td  >7</td>
-    <td  >0</td>
-    <td  >0</td>
-    <td  >0</td>
-    <td  >1</td>
-    <td  >1</td>
-  </tr>
-
-  <tr>
-    <td  >8</td>
-    <td  >больше 10 </td>
-    <td  >25</td>
-    <td  >8</td>
-    <td  >0</td>
-    <td  >1</td>
-    <td  >1</td>
-    <td  >0</td>
-    <td  >0</td>
-  </tr>
- 
-</tbody>
-</table>
+| Мин. fclk, МГц | Макс. fclk, МГц | Макс. погрешность fclk, % | Коэф. деления | DIV2 | DIV1 | DIV0 | PRE1 | PRE0 |
+| -------------- | --------------- | ------------------------- | ------------- | ---- | ---- | ---- | ---- | ---- |
+| 1              | 1,25            | 25                        | 1             | 0    | 0    | 0    | 0    | 0    |
+| 2              | 2,5             | 25                        | 2             | 0    | 0    | 1    | 0    | 0    |
+| 3              | 3,75            | 25                        | 3             | 0    | 0    | 0    | 0    | 1    |
+| 4              | < 5             | 25                        | 4             | 0    | 1    | 0    | 0    | 0    |
+| 5              | < 6             | 20                        | 5             | 0    | 0    | 0    | 1    | 0    |
+| 6              | < 7             | 17                        | 6             | 0    | 0    | 1    | 0    | 1    |
+| 7              | < 8             | 14                        | 7             | 0    | 0    | 0    | 1    | 1    |
+| 8              | < 10            | 25                        | 8             | 0    | 1    | 1    | 0    | 0    |
 
 ### OWI_CTRL
 
 <table className="table">
 <tbody>
 
-  <tr>
-    <th >Бит</th>
-    <th >7</th>
-    <th >6</th>
-    <th >5</th>
-    <th >4</th>
-    <th >3</th>
-    <th >2</th>
-    <th >1</th>
-    <th >0</th>
-  </tr>
+<tr>
+  <th>Бит</th>
+  <th>7</th>
+  <th>6</th>
+  <th>5</th>
+  <th>4</th>
+  <th>3</th>
+  <th>2</th>
+  <th>1</th>
+  <th>0</th>
+</tr>
 
-   <tr>
-    <th >Назначение</th>
-    <td  >Резерв</td>
-    <td  >OD</td>
-    <td  >BIT_CTL</td>
-    <td  colSpan={2} >Резерв*</td>
-    <td  >EN_FOW</td>
-    <td  >PPM</td>
-    <td  >LLM</td>
-  </tr>
+<tr>
+  <th>Назначение</th>
+  <td>Резерв</td>
+  <td>OD</td>
+  <td>BIT_CTL</td>
+  <td colSpan={2}>Резерв*</td>
+  <td>EN_FOW</td>
+  <td>PPM</td>
+  <td>LLM</td>
+</tr>
 
    <tr>
     <th >Начальное значение</th>

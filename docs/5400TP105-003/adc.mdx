@@ -16,25 +16,18 @@ sidebar_position: 14
 
 После подачи сигнала START микроконтроллер ожидает READY на протяжении 32 периодов. Если READY не пришел, то в статусном регистре ADC_ST будет записана «1» в соответствующий бит. Можно разрешить прерывание по приходу READY. Результаты преобразования находятся в регистрах ADC_RES0, ADC_RES1. Далее START можно подать снова, записав бит START_ADC в регистре ADC_CTRL.
 
-<div className="doc-image-container">
-<figure>
-  <img src="/img/5400TP105-003/adc/Диаграмма_работы_АЦП_один.svg" alt="" />
-  <figcaption  className="doc-image-container__image-title">Временная диаграмма работы в одиночном режиме</figcaption>
-</figure>
-</div>
-
-Вне зависимости от режима, после включения АЦП записью «1» в бит EN регистра ADC_CTRL, начинается отсчет 16 таков частоты АЦП, по завершению которых формируется сигнал START, если записан бит START_ADC. Сигнал START формируется по фронту частоты АЦП и снимается по срезу, длится 1,5 периода.
+<DocumentFigure src="/img/5400TP105-003/adc/Диаграмма_работы_АЦП_один.svg" caption="Временная диаграмма работы в одиночном режиме" />
+Вне зависимости от режима, после включения АЦП записью «1» в бит EN регистра ADC_CTRL, начинается отсчет 16 таков частоты АЦП, по завершению которых формируется сигнал START, если записан бит
+START_ADC. Сигнал START формируется по фронту частоты АЦП и снимается по срезу, длится 1,5 периода.
 
 ## Автоматический режим
 
 В этом режиме START подается автоматически, пока записан бит START_ADC в регистре ADC_CTRL. Микроконтроллер ожидает READY на протяжении 32 периодов, если READY не придет START будет отправлен снова. Микроконтроллер должен успевать считывать данные с АЦП. В том случае, если микроконтроллер будет читать данные настолько долго, что АЦП успеет завершить новое преобразование, то в регистр ADC_ST будет записан соответствующий бит. Сигнал READY формируется и снимается по фронту частоты АЦП, длится 2 периода.
 
-<div className="doc-image-container">
-<figure>
-  <img src="/img/5400TP105-003/adc/Диаграмма_работы_АЦП_авто.svg" alt="" />
-  <figcaption  className="doc-image-container__image-title">Временная диаграмма максимального быстродействия в автоматическом режиме</figcaption>
-</figure>
-</div>
+<DocumentFigure
+  src="/img/5400TP105-003/adc/Диаграмма_работы_АЦП_авто.svg"
+  caption="Временная диаграмма максимального быстродействия в автоматическом режиме"
+/>
 
 ## Алгоритмы работы
 
@@ -85,25 +78,25 @@ sidebar_position: 14
 <table className="table">
 <tbody>
 
-  <tr>
-    <th >Бит</th>
-    <th >7</th>
-    <th >6</th>
-    <th >5</th>
-    <th >4</th>
-    <th >3</th>
-    <th >2</th>
-    <th >1</th>
-    <th >0</th>
-  </tr>
+<tr>
+  <th>Бит</th>
+  <th>7</th>
+  <th>6</th>
+  <th>5</th>
+  <th>4</th>
+  <th>3</th>
+  <th>2</th>
+  <th>1</th>
+  <th>0</th>
+</tr>
 
-   <tr>
-    <th >Назначение</th>
-    <td  colSpan={3} >Резерв*</td>
-    <td  colSpan={3}  >MUX</td>
-    <td  >START_ADC</td>
-    <td  >EN</td>
-  </tr>
+<tr>
+  <th>Назначение</th>
+  <td colSpan={3}>Резерв*</td>
+  <td colSpan={3}>MUX</td>
+  <td>START_ADC</td>
+  <td>EN</td>
+</tr>
 
    <tr>
     <th >Начальное значение</th>
@@ -138,26 +131,26 @@ sidebar_position: 14
 <table className="table">
 <tbody>
 
-  <tr>
-    <th >Бит</th>
-    <th >7</th>
-    <th >6</th>
-    <th >5</th>
-    <th >4</th>
-    <th >3</th>
-    <th >2</th>
-    <th >1</th>
-    <th >0</th>
-  </tr>
+<tr>
+  <th>Бит</th>
+  <th>7</th>
+  <th>6</th>
+  <th>5</th>
+  <th>4</th>
+  <th>3</th>
+  <th>2</th>
+  <th>1</th>
+  <th>0</th>
+</tr>
 
-   <tr>
-    <th >Назначение</th>
-    <td  colSpan={2} >Резерв</td>
-    <td  >SHIFT</td>
-    <td  colSpan={3}  >DIV</td>
-    <td  >READ_MODE</td>
-    <td  >MODE</td>
-  </tr>
+<tr>
+  <th>Назначение</th>
+  <td colSpan={2}>Резерв</td>
+  <td>SHIFT</td>
+  <td colSpan={3}>DIV</td>
+  <td>READ_MODE</td>
+  <td>MODE</td>
+</tr>
 
    <tr>
     <th >Начальное значение</th>
@@ -197,30 +190,32 @@ sidebar_position: 14
 <table className="table">
 <tbody>
 
-  <tr>
-    <th >Бит</th>
-    <th >7</th>
-    <th >6</th>
-    <th >5</th>
-    <th >4</th>
-    <th >3</th>
-    <th >2</th>
-    <th >1</th>
-    <th >0</th>
-  </tr>
+<tr>
+  <th>Бит</th>
+  <th>7</th>
+  <th>6</th>
+  <th>5</th>
+  <th>4</th>
+  <th>3</th>
+  <th>2</th>
+  <th>1</th>
+  <th>0</th>
+</tr>
 
-   <tr>
-    <th >Назначение</th>
-    <td  colSpan={5} rowSpan={2} >Резерв</td>
-    <td  >RDY</td>
-    <td  >ERR_RDY</td>
-    <td  >ERR_SPD</td>
-  </tr>
+<tr>
+  <th>Назначение</th>
+  <td colSpan={5} rowSpan={2}>
+    Резерв
+  </td>
+  <td>RDY</td>
+  <td>ERR_RDY</td>
+  <td>ERR_SPD</td>
+</tr>
 
-   <tr>
-    <th >Тип статуса</th>
-    <td  colSpan={3} >EVENT</td>
-  </tr>
+<tr>
+  <th>Тип статуса</th>
+  <td colSpan={3}>EVENT</td>
+</tr>
 
   <tr>
     <th >Начальное значение</th>
@@ -243,25 +238,25 @@ sidebar_position: 14
 <table className="table">
 <tbody>
 
-  <tr>
-    <th >Бит</th>
-    <th >7</th>
-    <th >6</th>
-    <th >5</th>
-    <th >4</th>
-    <th >3</th>
-    <th >2</th>
-    <th >1</th>
-    <th >0</th>
-  </tr>
+<tr>
+  <th>Бит</th>
+  <th>7</th>
+  <th>6</th>
+  <th>5</th>
+  <th>4</th>
+  <th>3</th>
+  <th>2</th>
+  <th>1</th>
+  <th>0</th>
+</tr>
 
-   <tr>
-    <th >Назначение</th>
-    <td  colSpan={5} >Резерв</td>
-    <td  >RDY</td>
-    <td  >ERR_RDY</td>
-    <td  >ERR_SPD</td>
-  </tr>
+<tr>
+  <th>Назначение</th>
+  <td colSpan={5}>Резерв</td>
+  <td>RDY</td>
+  <td>ERR_RDY</td>
+  <td>ERR_SPD</td>
+</tr>
 
   <tr>
     <th >Начальное значение</th>
@@ -281,22 +276,22 @@ sidebar_position: 14
 <table className="table">
 <tbody>
 
-  <tr>
-    <th >Бит</th>
-    <th >7</th>
-    <th >6</th>
-    <th >5</th>
-    <th >4</th>
-    <th >3</th>
-    <th >2</th>
-    <th >1</th>
-    <th >0</th>
-  </tr>
+<tr>
+  <th>Бит</th>
+  <th>7</th>
+  <th>6</th>
+  <th>5</th>
+  <th>4</th>
+  <th>3</th>
+  <th>2</th>
+  <th>1</th>
+  <th>0</th>
+</tr>
 
-   <tr>
-    <th >Назначение</th>
-    <td  colSpan={8} >RESULT</td>
-  </tr>
+<tr>
+  <th>Назначение</th>
+  <td colSpan={8}>RESULT</td>
+</tr>
 
   <tr>
     <th >Начальное значение</th>
@@ -315,22 +310,22 @@ sidebar_position: 14
 <table className="table">
 <tbody>
 
-  <tr>
-    <th >Бит</th>
-    <th >7</th>
-    <th >6</th>
-    <th >5</th>
-    <th >4</th>
-    <th >3</th>
-    <th >2</th>
-    <th >1</th>
-    <th >0</th>
-  </tr>
+<tr>
+  <th>Бит</th>
+  <th>7</th>
+  <th>6</th>
+  <th>5</th>
+  <th>4</th>
+  <th>3</th>
+  <th>2</th>
+  <th>1</th>
+  <th>0</th>
+</tr>
 
-   <tr>
-    <th >Назначение</th>
-    <td  colSpan={8} >RESULT</td>
-  </tr>
+<tr>
+  <th>Назначение</th>
+  <td colSpan={8}>RESULT</td>
+</tr>
 
   <tr>
     <th >Начальное значение</th>

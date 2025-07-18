@@ -20,12 +20,7 @@ sidebar_position: 4
 
 ## Структурная схема
 
-<div className="doc-image-container">
-<figure>
-  <img src="/img/5400TP105-003/i2c/Стуктурная_схема_I2C.svg" alt="" />
-  <figcaption  className="doc-image-container__image-title">Структурная схема I2C</figcaption>
-</figure>
-</div>
+<DocumentFigure src="/img/5400TP105-003/i2c/Стуктурная_схема_I2C.svg" caption="Структурная схема I2C" />
 
 I2C состоит из следующих блоков:
 
@@ -51,7 +46,7 @@ I2C состоит из следующих блоков:
   - определить тип адресации битом ADDR_MOD;
   - установить бит START;
   - включить модуль битом EN.
-- по статусному биту FIFO*EMPTY_TX регистра I2C_ST1 или TX_END_EMPTY_FIFO регистра I2C_ST2 установить бит STOP регистра I2C_CTRL (если бит STOP устанавливается по флагу FIFO_EMPTY_TX, т.е. во время передачи последнего слова, то STOP последовательность будет развернута незамедлительно после отправки последнего байта данных и считывания его бита подтверждения, в противном случае между последним \_Tlow*/2 и началом STOP последовательности возникает задержка, связанная с уходом на обработчик прерываний, чтением и записью регистров);
+- по статусному биту FIFO\*EMPTY*TX регистра I2C_ST1 или TX_END_EMPTY_FIFO регистра I2C_ST2 установить бит STOP регистра I2C_CTRL (если бит STOP устанавливается по флагу FIFO_EMPTY_TX, т.е. во время передачи последнего слова, то STOP последовательность будет развернута незамедлительно после отправки последнего байта данных и считывания его бита подтверждения, в противном случае между последним \_Tlow/2* и началом STOP последовательности возникает задержка, связанная с уходом на обработчик прерываний, чтением и записью регистров);
 - на основании статусного бита STOP регистра I2C_ST0 установить момент завершения подачи STOP последовательности, выключить модуль или продолжить работу.
 
 При потере арбитража во время отправки данных в случае, если адрес записан в первом байте FIFO_TX, пользователь имеет возможность предпринять вторую попытку после освобождения шины без повторного заполнения буфера, сбросив указатель чтения битом RST_TX_RDP регистра I2C_CTRL.
@@ -78,7 +73,7 @@ I2C состоит из следующих блоков:
   - включить модуль битом EN.
 - в регистре I2C*CTRL по статусному биту RX_THRESHOLD_PASS регистра I2C_ST1 или FIFO_RX_NOT_EMPTY, или TX_END_EMPTY_FIFO регистра I2C_ST2 (в зависимости   
   от количества принимаемых байт; если бит STOP устанавливается по FIFO_RX_NOT_EMPTY,   
-  то между последним \_Tlow*/2 и началом STOP последовательности возникает задержка, связанная с уходом на обработчик прерываний, чтением и записью регистров):
+  то между последним \_Tlow*/2\_ и началом STOP последовательности возникает задержка, связанная с уходом на обработчик прерываний, чтением и записью регистров):
   - если принимается более одного байта записать «0» в бит ACK;
   - установить бит STOP.
 - на основании статусного бита STOP регистра I2C_ST0 установить момент завершения подачи STOP последовательности, cчитать полученные данные из регистра I2C_RXFIFO, выключить модуль или продолжить работу.
@@ -167,12 +162,12 @@ I2C состоит из следующих блоков:
     <th >0</th>
   </tr>
 
-  <tr>
-    <th >Назначение</th>
-    <td colSpan={2} >Резерв</td>
-    <td colSpan={5} >FILT_DEPTH</td>
-    <td >EN_OV</td>
-  </tr>
+<tr>
+  <th>Назначение</th>
+  <td colSpan={2}>Резерв</td>
+  <td colSpan={5}>FILT_DEPTH</td>
+  <td>EN_OV</td>
+</tr>
 
   <tr>
     <th >Начальное значение</th>
@@ -219,17 +214,17 @@ $$
     <th >0</th>
   </tr>
 
-  <tr>
-    <th >Назначение</th>
-    <td >RST_RX_PNTRS</td>
-    <td >RST_TX_RDP</td>
-    <td >RST_TX_PNTRS</td>
-    <td >ADDR_MOD</td>
-    <td >ACK</td>
-    <td >STOP</td>
-    <td >START</td>
-    <td >EN</td>
-  </tr>
+<tr>
+  <th>Назначение</th>
+  <td>RST_RX_PNTRS</td>
+  <td>RST_TX_RDP</td>
+  <td>RST_TX_PNTRS</td>
+  <td>ADDR_MOD</td>
+  <td>ACK</td>
+  <td>STOP</td>
+  <td>START</td>
+  <td>EN</td>
+</tr>
 
   <tr>
     <th >Начальное значение</th>
@@ -292,27 +287,27 @@ $$
     <th >0</th>
   </tr>
 
-  <tr>
-    <th >Назначение</th>
-    <td >FIFO_RX_OV</td>
-    <td >FIFO_RX_FULL</td>
-    <td >ARB_LOST</td>
-    <td >BUS_ERROR</td>
-    <td >ACK_FAILURE</td>
-    <td >BTF</td>
-    <td >STOP</td>
-    <td >START</td>
-  </tr>
-    <tr>
-    <th >Тип статуса</th>
-    <td colSpan={2} >FLAG</td>
-    <td >EVENT</td>
-    <td >EVENT</td>
-    <td >EVENT</td>
-    <td >EVENT</td>
-    <td >EVENT</td>
-    <td >EVENT</td>
-  </tr>
+<tr>
+  <th>Назначение</th>
+  <td>FIFO_RX_OV</td>
+  <td>FIFO_RX_FULL</td>
+  <td>ARB_LOST</td>
+  <td>BUS_ERROR</td>
+  <td>ACK_FAILURE</td>
+  <td>BTF</td>
+  <td>STOP</td>
+  <td>START</td>
+</tr>
+<tr>
+  <th>Тип статуса</th>
+  <td colSpan={2}>FLAG</td>
+  <td>EVENT</td>
+  <td>EVENT</td>
+  <td>EVENT</td>
+  <td>EVENT</td>
+  <td>EVENT</td>
+  <td>EVENT</td>
+</tr>
 
   <tr>
     <th >Начальное значение</th>
@@ -429,16 +424,16 @@ $$
     <th >0</th>
   </tr>
 
-  <tr>
-    <th >Назначение</th>
-    <td colSpan={7} >Резерв</td>
-    <td >TX_END_EMPTY_FIFO</td>
-  </tr>
-    <tr>
-    <th >Тип статуса</th>
-    <td colSpan={7} ></td>
-    <td >EVENT</td>
-  </tr>
+<tr>
+  <th>Назначение</th>
+  <td colSpan={7}>Резерв</td>
+  <td>TX_END_EMPTY_FIFO</td>
+</tr>
+<tr>
+  <th>Тип статуса</th>
+  <td colSpan={7}></td>
+  <td>EVENT</td>
+</tr>
 
   <tr>
     <th >Начальное значение</th>
@@ -466,10 +461,10 @@ $$
     <th >0</th>
   </tr>
 
-  <tr>
-    <th >Назначение</th>
-    <td colSpan={8} >ADDR</td>
-  </tr>
+<tr>
+  <th>Назначение</th>
+  <td colSpan={8}>ADDR</td>
+</tr>
 
   <tr>
     <th >Начальное значение</th>
@@ -497,11 +492,11 @@ $$
     <th >0</th>
   </tr>
 
-  <tr>
-    <th >Назначение</th>
-    <td colSpan={7} >Резерв</td>
-    <td >ADDR</td>
-  </tr>
+<tr>
+  <th>Назначение</th>
+  <td colSpan={7}>Резерв</td>
+  <td>ADDR</td>
+</tr>
 
   <tr>
     <th >Начальное значение</th>
@@ -529,10 +524,10 @@ $$
     <th >0</th>
   </tr>
 
-  <tr>
-    <th >Назначение</th>
-    <td colSpan={8} >PRSC</td>
-  </tr>
+<tr>
+  <th>Назначение</th>
+  <td colSpan={8}>PRSC</td>
+</tr>
 
   <tr>
     <th >Начальное значение</th>
@@ -560,13 +555,13 @@ $$
     <th >0</th>
   </tr>
 
-  <tr>
-    <th >Назначение</th>
-    <td >F/S</td>
-    <td >DUTY</td>
-    <td colSpan={2} >Резерв</td>
-    <td colSpan={4} >PRSC</td>
-  </tr>
+<tr>
+  <th>Назначение</th>
+  <td>F/S</td>
+  <td>DUTY</td>
+  <td colSpan={2}>Резерв</td>
+  <td colSpan={4}>PRSC</td>
+</tr>
 
   <tr>
     <th >Начальное значение</th>
@@ -647,10 +642,10 @@ $$
     <th >0</th>
   </tr>
 
-  <tr>
-    <th >Назначение</th>
-    <td colSpan={8} >SLV_HLD</td>
-  </tr>
+<tr>
+  <th>Назначение</th>
+  <td colSpan={8}>SLV_HLD</td>
+</tr>
 
   <tr>
     <th >Начальное значение</th>
@@ -666,24 +661,24 @@ $$
 <table className="table">
 <tbody>
 
-  <tr>
-    <th >Бит</th>
-    <th >7</th>
-    <th >6</th>
-    <th >5</th>
-    <th >4</th>
-    <th >3</th>
-    <th >2</th>
-    <th >1</th>
-    <th >0</th>
-  </tr>
+<tr>
+  <th>Бит</th>
+  <th>7</th>
+  <th>6</th>
+  <th>5</th>
+  <th>4</th>
+  <th>3</th>
+  <th>2</th>
+  <th>1</th>
+  <th>0</th>
+</tr>
 
-  <tr>
-    <th >Назначение</th>
-    <td >Резерв</td>
-    <td colSpan={5} >TRISE</td>
-    <td colSpan={2} >SLV_HLD</td>
-  </tr>
+<tr>
+  <th>Назначение</th>
+  <td>Резерв</td>
+  <td colSpan={5}>TRISE</td>
+  <td colSpan={2}>SLV_HLD</td>
+</tr>
 
   <tr>
     <th >Начальное значение</th>
@@ -731,17 +726,17 @@ $$
     <th >0</th>
   </tr>
 
-  <tr>
-    <th >Назначение</th>
-    <td >FIFO_RX_OV</td>
-    <td >FIFO_RX_FULL</td>
-    <td >ARB_LOST</td>
-    <td >BUS_ERROR</td>
-    <td >ACK_FAILURE</td>
-    <td >BTF</td>
-    <td >STOP</td>
-    <td >START</td>
-  </tr>
+<tr>
+  <th>Назначение</th>
+  <td>FIFO_RX_OV</td>
+  <td>FIFO_RX_FULL</td>
+  <td>ARB_LOST</td>
+  <td>BUS_ERROR</td>
+  <td>ACK_FAILURE</td>
+  <td>BTF</td>
+  <td>STOP</td>
+  <td>START</td>
+</tr>
 
   <tr>
     <th >Начальное значение</th>
@@ -774,17 +769,17 @@ $$
     <th >0</th>
   </tr>
 
-  <tr>
-    <th >Назначение</th>
-    <td >RX_THRESHOLD_PASS</td>
-    <td >MODE</td>
-    <td >BUS_CLEAR</td>
-    <td >SLV_RX</td>
-    <td >SLV_TX</td>
-    <td >FIFO_EMPTY_TX</td>
-    <td >FIFO_FULL_TX</td>
-    <td >FIFO_RX_NOT_EMPTY</td>
-  </tr>
+<tr>
+  <th>Назначение</th>
+  <td>RX_THRESHOLD_PASS</td>
+  <td>MODE</td>
+  <td>BUS_CLEAR</td>
+  <td>SLV_RX</td>
+  <td>SLV_TX</td>
+  <td>FIFO_EMPTY_TX</td>
+  <td>FIFO_FULL_TX</td>
+  <td>FIFO_RX_NOT_EMPTY</td>
+</tr>
 
   <tr>
     <th >Начальное значение</th>
@@ -817,11 +812,11 @@ $$
     <th >0</th>
   </tr>
 
-  <tr>
-    <th >Назначение</th>
-    <td colSpan={7} >Резерв</td>
-    <td >TX_END_EMPTY_FIFO</td>
-  </tr>
+<tr>
+  <th>Назначение</th>
+  <td colSpan={7}>Резерв</td>
+  <td>TX_END_EMPTY_FIFO</td>
+</tr>
 
   <tr>
     <th >Начальное значение</th>
@@ -852,10 +847,10 @@ $$
     <th >0</th>
   </tr>
 
-  <tr>
-    <th >Назначение</th>
-    <td colSpan={8} >TX_FIFO</td>
-  </tr>
+<tr>
+  <th>Назначение</th>
+  <td colSpan={8}>TX_FIFO</td>
+</tr>
 
   <tr>
     <th >Начальное значение</th>
@@ -883,10 +878,10 @@ $$
     <th >0</th>
   </tr>
 
-  <tr>
-    <th >Назначение</th>
-    <td colSpan={8} >RX_FIFO</td>
-  </tr>
+<tr>
+  <th>Назначение</th>
+  <td colSpan={8}>RX_FIFO</td>
+</tr>
 
   <tr>
     <th >Начальное значение</th>
@@ -914,11 +909,11 @@ $$
     <th >0</th>
   </tr>
 
-  <tr>
-    <th >Назначение</th>
-    <td colSpan={4} >Резерв</td>
-    <td colSpan={4} >TX_WORDS</td>
-  </tr>
+<tr>
+  <th>Назначение</th>
+  <td colSpan={4}>Резерв</td>
+  <td colSpan={4}>TX_WORDS</td>
+</tr>
 
   <tr>
     <th >Начальное значение</th>
@@ -946,11 +941,11 @@ $$
     <th >0</th>
   </tr>
 
-  <tr>
-    <th >Назначение</th>
-    <td colSpan={4} >Резерв</td>
-    <td colSpan={4} >RX_THRES</td>
-  </tr>
+<tr>
+  <th>Назначение</th>
+  <td colSpan={4}>Резерв</td>
+  <td colSpan={4}>RX_THRES</td>
+</tr>
 
   <tr>
     <th >Начальное значение</th>

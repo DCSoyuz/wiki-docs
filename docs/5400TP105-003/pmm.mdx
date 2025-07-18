@@ -7,12 +7,11 @@ sidebar_position: 7
 
 ## Структурная схема
 
-<div className="doc-image-container">
-<figure>
-  <img src="/img/5400TP105-003/pmm/Управление_сбросом_и_питанием.svg" alt="" />
-  <figcaption  className="doc-image-container__image-title">Структурная схема системы управления сбросом и питанием</figcaption>
-</figure>
-</div>
+<DocumentFigure
+  src="/img/5400TP105-003/pmm/Управление_сбросом_и_питанием.svg"
+  alt="Структурная схема системы управления сбросом и питанием"
+  caption="Структурная схема системы управления сбросом и питанием"
+/>
 
 Система управления сбросом и питанием состоит из следующих блоков:
 
@@ -60,11 +59,11 @@ sidebar_position: 7
     <th >0</th>
   </tr>
 
-  <tr>
-    <th >Назначение</th>
-    <td colSpan={7} >Резерв</td>
-    <td >CPU_SLEEP_EN</td>
-  </tr>
+<tr>
+  <th>Назначение</th>
+  <td colSpan={7}>Резерв</td>
+  <td>CPU_SLEEP_EN</td>
+</tr>
 
   <tr>
     <th >Начальное значение</th>
@@ -95,16 +94,18 @@ sidebar_position: 7
     <th >0</th>
   </tr>
 
-  <tr>
-    <th >Назначение</th>
-    <td rowSpan={2} colSpan={6} >Резерв</td>
-    <td >JTAG_RST</td>
-    <td >WDT_RST</td>
-  </tr>
-    <tr>
-    <th >Тип статуса</th>
-    <td colSpan={2} >EVENT</td>
-  </tr>
+<tr>
+  <th>Назначение</th>
+  <td rowSpan={2} colSpan={6}>
+    Резерв
+  </td>
+  <td>JTAG_RST</td>
+  <td>WDT_RST</td>
+</tr>
+<tr>
+  <th>Тип статуса</th>
+  <td colSpan={2}>EVENT</td>
+</tr>
 
   <tr>
     <th >Начальное значение</th>

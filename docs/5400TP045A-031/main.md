@@ -41,6 +41,7 @@ sidebar_position: 2
 </figure>
 </div>
 
+
 ## Электрические характеристики
 
 <table className="table">
